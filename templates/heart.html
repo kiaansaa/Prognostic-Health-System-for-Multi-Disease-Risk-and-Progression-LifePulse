@@ -1,0 +1,114 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="row" style="margin-bottom: 175px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <center><h1>Heart Disease Predictor</h1></center>
+        <div class="card card-body" style="border: 1px solid black;">
+            <form name="heartForm" class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST" onsubmit="return validateForm()">
+                <input type="hidden" name="disease" value="heart">
+            
+            
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="age" placeholder="Age" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="sex" placeholder="Sex (Male: 1, Female: 0)" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="cp" placeholder="Chest Pain Type" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="trestbps" placeholder="Resting Blood Pressure (mm Hg)" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="chol" placeholder="Serum Cholesterol (mg/dl)" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="fbs" placeholder="Fasting Blood Sugar (> 120 mg/dl, 1 = true; 0 = false)" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="restecg" placeholder="Resting Electrocardiographic Results" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="thalach" placeholder="Maximum Heart Rate Achieved" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="exang" placeholder="Exercise Induced Angina (1 = yes; 0 = no)" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="oldpeak" placeholder="ST Depression Induced by Exercise" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="slope" placeholder="Slope of Peak Exercise ST Segment" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="ca" placeholder="Number of Major Vessels (0-3)" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input style="border: 1px solid black;" class="form-control" type="text" name="thal" placeholder="Thalassemia (3 = normal, 6 = fixed defect, 7 = reversible defect)" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <input type="submit" class="btn btn-info btn-block" value="Predict">
+            </form>
+            {% if message %}
+                <div class="alert alert-danger mt-3">
+                    {{ message }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script>
+    function validateForm() {
+        var form = document.forms["heartForm"];
+        for (var i = 0; i < form.length - 1; i++) {
+            if (form[i].value == "") {
+                alert("All fields must be filled out!");
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container">
+    <h2 class="text-center text-info mb-4">Malaria Prediction Result</h2>
+    <div class="card text-center">
+        <div class="card-body">
+            {% if pred == 1 %}
+                <h4 class="text-danger">🦠 The patient is likely <strong>Infected with Malaria</strong>.</h4>
+            {% else %}
+                <h4 class="text-success">✅ <strong>No Malaria Infection</strong>.</h4>
+            {% endif %}
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('malariaPage') }}" class="btn btn-primary">
+            🔄 Test Another
+        </a>
+    </div>
+</div>
+{% endblock %}

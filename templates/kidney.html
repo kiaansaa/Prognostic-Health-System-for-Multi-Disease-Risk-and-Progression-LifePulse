@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <center><h1>Kidney Disease Predictor</h1></center>
+        <div class="card card-body" style="border: 1px solid black;">
+            <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
+                <input type="hidden" name="disease" value="kidney">
+
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="BMI" placeholder="BMI"></div>
+                    <div class="col-md-6"><input class="form-control" name="SystolicBP" placeholder="SystolicBP"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="FastingBloodSugar" placeholder="FastingBloodSugar"></div>
+                    <div class="col-md-6"><input class="form-control" name="HbA1c" placeholder="HbA1c"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="SerumCreatinine" placeholder="SerumCreatinine"></div>
+                    <div class="col-md-6"><input class="form-control" name="BUNLevels" placeholder="BUNLevels"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="GFR" placeholder="GFR"></div>
+                    <div class="col-md-6"><input class="form-control" name="ProteinInUrine" placeholder="ProteinInUrine (yes/no)"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="MuscleCramps" placeholder="MuscleCramps (yes/no)"></div>
+                    <div class="col-md-6"><input class="form-control" name="Itching" placeholder="Itching (yes/no)"></div>
+                </div><br>
+
+                <input type="submit" class="btn btn-info btn-block" value="Predict">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

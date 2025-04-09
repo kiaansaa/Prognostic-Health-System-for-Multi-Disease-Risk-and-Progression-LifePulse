@@ -1,0 +1,142 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% if message %}
+    <div class="alert alert-danger">{{ message }}</div>
+{% endif %}
+
+<div class="container">
+    <!-- Hero Section -->
+    <div class="card card-body text-center" style="border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 50px;">
+        <h2 class="display-4 font-weight-bold">LifePulse: A Machine Learning Health Prediction App</h2>
+        <p class="lead text-muted">Accurate disease predictions with advanced machine learning and deep learning models.</p>
+        <hr class="my-4">
+        <p>Our models are trained on large datasets and thousands of images to predict various diseases with high accuracy.</p>
+    </div>
+
+    <!-- Model Accuracies Section -->
+    <div class="card card-body mt-5" style="border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h3>Model Accuracies:</h3>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Diabetes Model:</strong> 98.25%</li>
+            <li class="list-group-item"><strong>Breast Cancer Model:</strong> 98.25%</li>
+            <li class="list-group-item"><strong>Heart Disease Model:</strong> 85.25%</li>
+            <li class="list-group-item"><strong>Kidney Disease Model:</strong> 99%</li>
+            <li class="list-group-item"><strong>Liver Disease Model:</strong> 78%</li>
+            <li class="list-group-item"><strong>Malaria Model:</strong> 96%</li>
+            <li class="list-group-item"><strong>Pneumonia Model:</strong> 95%</li>
+        </ul>
+    </div>
+
+    <!-- Disease Information Section -->
+    <div class="card card-body mt-5" style="border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h3 class="text-center">Information About the Diseases We Predict</h3>
+        <p class="text-muted text-center">Learn about the diseases and their symptoms that our system can predict.</p>
+
+        <!-- Disease Cards -->
+        <div class="row">
+            <!-- Diabetes -->
+            <div class="col-md-6">
+                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4>Diabetes</h4>
+                        <p>Diabetes occurs when blood glucose levels are too high. Insulin is used to regulate glucose intake, and without it, glucose stays in the blood.</p>
+                        <h5>Symptoms</h5>
+                        <ul>
+                            <li>Urinating often</li>
+                            <li>Extreme thirst</li>
+                            <li>Fatigue</li>
+                            <li>Blurry vision</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breast Cancer -->
+            <div class="col-md-6">
+                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4>Breast Cancer</h4>
+                        <p>Breast cancer forms in the cells of the breasts and is one of the most common cancers worldwide, especially in women.</p>
+                        <h5>Symptoms</h5>
+                        <ul>
+                            <li>Breast lump or thickening</li>
+                            <li>Changes in size, shape, or appearance</li>
+                            <li>Dimpling of the skin</li>
+                            <li>Redness or pitting of the skin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kidney Disease & Liver Disease -->
+        <div class="row">
+            <!-- Chronic Kidney Disease -->
+            <div class="col-md-6">
+                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4>Chronic Kidney Disease</h4>
+                        <p>Chronic kidney disease is the gradual loss of kidney function. It leads to the accumulation of fluid and waste in the body.</p>
+                        <h5>Symptoms</h5>
+                        <ul>
+                            <li>Nausea</li>
+                            <li>Fatigue</li>
+                            <li>Weakness</li>
+                            <li>Muscle cramps</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Liver Disease -->
+            <div class="col-md-6">
+                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4>Liver Disease</h4>
+                        <p>Liver diseases include conditions where the liver is damaged, often causing swelling, jaundice, and easy bruising.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Malaria & Pneumonia -->
+        <div class="row">
+            <!-- Malaria -->
+            <div class="col-md-6">
+                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4>Malaria</h4>
+                        <p>Malaria is a mosquito-borne disease that causes fever, chills, and in some cases, can be fatal if not treated properly.</p>
+                        <h5>Symptoms</h5>
+                        <ul>
+                            <li>Fever</li>
+                            <li>Chills</li>
+                            <li>Headache</li>
+                            <li>Nausea</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pneumonia -->
+            <div class="col-md-6">
+                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4>Pneumonia</h4>
+                        <p>Pneumonia is an infection that causes inflammation of the air sacs in the lungs, leading to difficulty breathing and coughing.</p>
+                        <h5>Symptoms</h5>
+                        <ul>
+                            <li>Cough with mucus</li>
+                            <li>Fever and chills</li>
+                            <li>Shortness of breath</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

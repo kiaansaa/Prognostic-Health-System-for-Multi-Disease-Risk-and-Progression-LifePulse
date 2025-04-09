@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <center><h1>Breast Cancer Predictor</h1></center>
+        <div class="card card-body" style="border: 1px solid black;">
+            <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
+                <input type="hidden" name="disease" value="breast_cancer">
+
+                <!-- Your input fields here -->
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="radius_mean" placeholder="radius_mean"></div>
+                    <div class="col-md-6"><input class="form-control" name="texture_mean" placeholder="texture_mean"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="perimeter_mean" placeholder="perimeter_mean"></div>
+                    <div class="col-md-6"><input class="form-control" name="area_mean" placeholder="area_mean"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="smoothness_mean" placeholder="smoothness_mean"></div>
+                    <div class="col-md-6"><input class="form-control" name="compactness_mean" placeholder="compactness_mean"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="concavity_mean" placeholder="concavity_mean"></div>
+                    <div class="col-md-6"><input class="form-control" name="concave_points_mean" placeholder="concave_points_mean"></div>
+                </div><br>
+                <div class="row">
+                    <div class="col-md-6"><input class="form-control" name="symmetry_mean" placeholder="symmetry_mean"></div>
+                    <div class="col-md-6"><input class="form-control" name="fractal_dimension_mean" placeholder="fractal_dimension_mean"></div>
+                </div><br>
+
+                <input type="submit" class="btn btn-info btn-block" value="Predict">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}
