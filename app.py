@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+from flask import redirect, url_for
+from datetime import datetime, timedelta
 from keras.models import load_model
 from keras.preprocessing import image
 from werkzeug.utils import secure_filename
@@ -8,6 +10,10 @@ import os
 from PIL import Image
 from lime.lime_tabular import LimeTabularExplainer
 from werkzeug.utils import secure_filename
+import matplotlib
+matplotlib.use('Agg')  
+import matplotlib.pyplot as plt
+
 import warnings
 
 import sys
@@ -18,6 +24,47 @@ from skimage.segmentation import mark_boundaries
 import matplotlib.pyplot as plt
 import uuid
 
+from flask_pymongo import PyMongo
+from mongo_setup import log_disease_prediction
+from urllib.parse import quote_plus
+
+
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+
+from mongo_setup import User, get_db
+from mongo_setup import get_db
+
+from bson.objectid import ObjectId
+
+from mongo_setup import get_users_collection
+
+import base64
+from io import BytesIO
+
+from flask import jsonify
+
+
+app = Flask(__name__)
+app.secret_key = "supersecretkey123"
+
+bcrypt = Bcrypt(app)
+
+login_manager = LoginManager()
+login_manager.login_view = "login"
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get_by_id(user_id)
+
+username = "Nishant8535"
+password = quote_plus("Gop65792")  # safely encoded
+host = "cluster0.dwdu3pu.mongodb.net"
+
+# Connect to your MongoDB Atlas cluster
+app.config["MONGO_URI"] = f"mongodb+srv://{username}:{password}@{host}/lifepulse_db?retryWrites=true&w=majority"
+mongo = PyMongo(app)
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -32,7 +79,7 @@ from scoring import (
     breast_cancer_health_score
 )
 
-app = Flask(__name__)
+
 
 # ✅ Load Models
 models = {
@@ -186,6 +233,23 @@ def predictPage():
         else:
             prediction = int(prediction)
 
+
+
+
+        log_disease_prediction(
+        username=current_user.username,  # ✅ Dynamically logs under logged-in user
+        disease=disease,
+        input_data=processed_inputs,
+        prediction=prediction,
+        health_score=health_score
+        )
+
+
+
+        return render_template('predict.html', pred=prediction, disease=disease, health_score=health_score)
+
+
+
         if fields:
             dummy_data = np.array([to_predict_np[0]] * 100)
             explainer = LimeTabularExplainer(
@@ -210,6 +274,7 @@ def malariapredictPage():
         if img.filename == '':
             return render_template('malaria.html', message="Please upload an image.")
 
+        # Save and preprocess image
         img_path = os.path.join('static/uploads', secure_filename(img.filename))
         os.makedirs(os.path.dirname(img_path), exist_ok=True)
         img.save(img_path)
@@ -219,16 +284,28 @@ def malariapredictPage():
         img_array = np.expand_dims(img_array, axis=0) / 255.0
 
         model = models['malaria']
-        prediction = model.predict(img_array)[0][0]
-        pred = 1 if prediction > 0.5 else 0
+        raw_output = model.predict(img_array)[0][0]
+
+        print(f"📊 Raw malaria model output: {raw_output}")
+
+        # 🛠 Flip logic: 0 = infected, 1 = healthy
+        pred = 1 if raw_output < 0.5 else 0
+
+        # ✅ Log to MongoDB if user is logged in
+        if current_user.is_authenticated:
+            log_disease_prediction(
+                username=current_user.username,
+                disease='malaria',
+                input_data="image",
+                prediction=pred,
+                health_score=None
+            )
 
         return render_template('malaria_predict.html', pred=pred, lime_path=None)
 
     except Exception as e:
         print("❌ Error during malaria prediction:", e)
         return render_template('malaria.html', message=f"Error: {e}")
-
-
 
     
 
@@ -259,6 +336,17 @@ def pneumoniapredictPage():
         prediction = model.predict(img_array)[0][0]
         pred = 1 if prediction > 0.5 else 0  # 1 = Pneumonia, 0 = Normal
 
+
+        if current_user.is_authenticated:
+            log_disease_prediction(
+            username=current_user.username,
+            disease='pneumonia',
+            input_data="image",
+            prediction=pred,
+            health_score=None
+        )
+
+
         return render_template('pneumonia_predict.html', pred=pred, image_path=image_path)
 
     except Exception as e:
@@ -266,8 +354,111 @@ def pneumoniapredictPage():
         return render_template('pneumonia.html', message=f"Error: {e}")
 
 
+@app.route('/dashboard/<username>')
+@login_required
+def userDashboard(username):
+    from mongo_setup import get_db
+    db = get_db()
+    logs = list(db["disease_logs"].find({"username": username}).sort("timestamp", -1))
+    return render_template('dashboard.html', username=username, logs=logs)
 
 
-    
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    users_collection = get_users_collection()
+
+    from mongo_setup import get_db  # Ensure it's imported
+
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
+        db = get_db()
+        users_collection = db["users"]
+
+        if users_collection.find_one({"username": username}):
+            return render_template('signup.html', message="Username already exists")
+
+        hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
+
+        users_collection.insert_one({
+            "username": username,
+            "email": email,
+            "password": hashed_pw,
+            "created_at": datetime.now()
+        })
+
+        return redirect(url_for('login'))
+
+    return render_template('signup.html')
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    users_collection = get_users_collection()
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user_data = users_collection.find_one({"username": username})
+        if user_data and bcrypt.check_password_hash(user_data['password'], password):
+            user_obj = User(user_data['username'], user_data['email'], user_data['_id'])
+            login_user(user_obj)
+            return redirect(url_for('userDashboard', username=user_obj.username))  # ✅ Redirect to dashboard
+        else:
+            return render_template('login.html', message="Invalid credentials")
+    return render_template('login.html')
+
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))  # Redirects to login page after logout
+
+
+@app.route('/progression/<disease>')
+@login_required
+def disease_progression(disease):
+    return render_template('progression.html', disease=disease)
+
+
+
+@app.route('/api/progression/<disease>')
+@login_required
+def progression_api(disease):
+    from datetime import datetime, timedelta
+    db = get_db()
+
+    # Get days filter from query param (default to 7)
+    days = int(request.args.get("days", 7))
+    from_time = datetime.now() - timedelta(days=days)
+
+    logs = list(
+        db["disease_logs"]
+        .find({
+            "username": current_user.username,
+            "disease": disease,
+            "health_score": {"$ne": None},
+            "timestamp": {"$gte": from_time}
+        }).sort("timestamp", 1)
+    )
+
+    # Return as JSON
+    data = {
+        "timestamps": [log["timestamp"].strftime("%Y-%m-%d %H:%M") for log in logs],
+        "scores": [log["health_score"] for log in logs]
+    }
+    return data
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -37089,25 +37089,25 @@
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divWXG4XUZRMTFVZNY"></div>
+        <div class="lime top_div" id="top_divFK5TZKZYSSE5FFB"></div>
         
         <script>
-        var top_div = d3.select('#top_divWXG4XUZRMTFVZNY').classed('lime top_div', true);
+        var top_div = d3.select('#top_divFK5TZKZYSSE5FFB').classed('lime top_div', true);
         
             var pp_div = top_div.append('div')
                                 .classed('lime predict_proba', true);
             var pp_svg = pp_div.append('svg').style('width', '100%');
-            var pp = new lime.PredictProba(pp_svg, ["Not at Risk", "At Risk"], [0.5003968253968253, 0.4996031746031746]);
+            var pp = new lime.PredictProba(pp_svg, ["Not at Risk", "At Risk"], [0.6, 0.4]);
             
         
         var exp_div;
             var exp = new lime.Explanation(["Not at Risk", "At Risk"]);
         
                 exp_div = top_div.append('div').classed('lime explanation', true);
-                exp.show([["radius_mean <= 20.00", 0.0], ["texture_mean <= 20.00", 0.0], ["perimeter_mean <= 60.00", 0.0], ["area_mean <= 200.00", 0.0], ["smoothness_mean <= 0.10", 0.0], ["compactness_mean <= 0.20", 0.0], ["concavity_mean <= 0.30", 0.0], ["concave_points_mean <= 0.10", 0.0], ["symmetry_mean <= 0.10", 0.0], ["fractal_dimension_mean <= 0.10", 0.0]], 1, exp_div);
+                exp.show([["age <= 34.00", 0.0], ["sex <= 0.00", 0.0], ["cp <= 2.00", 0.0], ["trestbps <= 180.00", 0.0], ["chol <= 50.00", 0.0], ["fbs <= 150.00", 0.0], ["restecg <= 40.00", 0.0], ["thalach <= 130.00", 0.0], ["exang <= 1.00", 0.0], ["oldpeak <= 50.00", 0.0]], 1, exp_div);
                 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["radius_mean", "20.00", 0.0], ["texture_mean", "20.00", 0.0], ["perimeter_mean", "60.00", 0.0], ["area_mean", "200.00", 0.0], ["smoothness_mean", "0.10", 0.0], ["compactness_mean", "0.20", 0.0], ["concavity_mean", "0.30", 0.0], ["concave_points_mean", "0.10", 0.0], ["symmetry_mean", "0.10", 0.0], ["fractal_dimension_mean", "0.10", 0.0]], 1, raw_div);
+            exp.show_raw_tabular([["age", "34.00", 0.0], ["sex", "0.00", 0.0], ["cp", "2.00", 0.0], ["trestbps", "180.00", 0.0], ["chol", "50.00", 0.0], ["fbs", "150.00", 0.0], ["restecg", "40.00", 0.0], ["thalach", "130.00", 0.0], ["exang", "1.00", 0.0], ["oldpeak", "50.00", 0.0]], 1, raw_div);
         
         </script>
         </body></html>

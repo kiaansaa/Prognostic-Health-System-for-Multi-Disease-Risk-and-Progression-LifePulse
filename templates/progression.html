@@ -1,0 +1,92 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>📈 {{ disease.capitalize() }} Risk Progression</h2>
+    <p class="text-muted">This chart shows how your health risk is trending over time.</p>
+  
+    <div class="d-flex justify-content-center mb-3">
+      <label for="filter">Filter:</label>
+      <select id="filter" class="form-control ml-2" style="width: auto;">
+        <option value="7">Last 7 Days</option>
+        <option value="30">Last 30 Days</option>
+        <option value="365">Last 365 Days</option>
+      </select>
+    </div>
+  
+    <div id="chartContainer" class="shadow rounded p-3 bg-white" style="max-width: 100%; overflow-x: auto;">
+      <canvas id="progressionChart" style="max-width: 100%; height: auto;"></canvas>
+      <p id="noDataMessage" class="mt-3 text-muted d-none">No health score data available.</p>
+    </div>
+  
+    <a href="{{ url_for('userDashboard', username=current_user.username) }}" class="btn btn-primary mt-4">
+      🔙 Back to Dashboard
+    </a>
+  </div>
+  
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const disease = "{{ disease }}";
+  const chartCanvas = document.getElementById("progressionChart").getContext("2d");
+  let chart;
+
+  async function loadChart(days = 7) {
+    const res = await fetch(`/api/progression/${disease}?days=${days}`);
+    const data = await res.json();
+
+    if (chart) chart.destroy(); // Clear old chart
+
+    if (data.timestamps.length === 0) {
+      document.getElementById("progressionChart").style.display = "none";
+      document.getElementById("noDataMessage").style.display = "block";
+      return;
+    } else {
+      document.getElementById("progressionChart").style.display = "block";
+      document.getElementById("noDataMessage").style.display = "none";
+    }
+
+    chart = new Chart(chartCanvas, {
+      type: "line",
+      data: {
+        labels: data.timestamps,
+        datasets: [{
+          label: "Health Score",
+          data: data.scores,
+          borderColor: "blue",
+          backgroundColor: "rgba(0, 0, 255, 0.1)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 7
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            ticks: {
+              autoSkip: true,
+              maxRotation: 45,
+              minRotation: 45
+            }
+          },
+          y: {
+            beginAtZero: true,
+            suggestedMax: 100
+          }
+        }
+      }
+    });
+  }
+
+  // Load on page
+  loadChart();
+
+  // Filter change handler
+  document.getElementById("daysFilter").addEventListener("change", function () {
+    const selectedDays = this.value;
+    loadChart(selectedDays);
+  });
+</script>
+{% endblock %}
