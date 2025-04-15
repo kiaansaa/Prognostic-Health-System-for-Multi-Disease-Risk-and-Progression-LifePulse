@@ -1,142 +1,158 @@
 {% extends 'main.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home_style.css') }}">
+{% endblock %}
+
 {% block content %}
-{% if message %}
-    <div class="alert alert-danger">{{ message }}</div>
-{% endif %}
 
-<div class="container">
-    <!-- Hero Section -->
-    <div class="card card-body text-center" style="border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 50px;">
-        <h2 class="display-4 font-weight-bold">LifePulse: A Machine Learning Health Prediction App</h2>
-        <p class="lead text-muted">Accurate disease predictions with advanced machine learning and deep learning models.</p>
-        <hr class="my-4">
-        <p>Our models are trained on large datasets and thousands of images to predict various diseases with high accuracy.</p>
+<!-- Hero Section -->
+<section class="hero-section no-gap-top">
+  <div class="pulse-background"></div>
+  <div class="hero-overlay">
+    <h1>THE MOST VALUABLE THING IS YOUR HEALTH</h1>
+    <p>Empowering you with AI-powered disease prediction and progression monitoring.</p>
+    <a href="#disease-section" class="btn btn-primary">Get Started ↓</a>
+  </div>
+</section>
+
+<!-- Disease Prediction Section -->
+<section id="disease-section" class="disease-section">
+  <h2>Disease Prediction System</h2>
+  <p class="subtext">AI-powered prediction for multiple diseases. Stay informed about your health risks.</p>
+  <button class="mobile-toggle" onclick="toggleDiseaseMenu()">☰ Select a Disease</button>
+  <div class="disease-container">
+    <div class="disease-menu sticky" id="diseaseMenu">
+      <ul>
+        <li class="active" data-disease="heart">❤️ Heart Disease</li>
+        <li data-disease="diabetes">🩸 Diabetes</li>
+        <li data-disease="breast">🎗️ Breast Cancer</li>
+        <li data-disease="liver">🧬 Liver Disease</li>
+        <li data-disease="kidney">💧 Kidney Disease</li>
+        <li data-disease="malaria">🦟 Malaria</li>
+        <li data-disease="pneumonia">🌬️ Pneumonia</li>
+      </ul>
     </div>
-
-    <!-- Model Accuracies Section -->
-    <div class="card card-body mt-5" style="border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h3>Model Accuracies:</h3>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Diabetes Model:</strong> 98.25%</li>
-            <li class="list-group-item"><strong>Breast Cancer Model:</strong> 98.25%</li>
-            <li class="list-group-item"><strong>Heart Disease Model:</strong> 85.25%</li>
-            <li class="list-group-item"><strong>Kidney Disease Model:</strong> 99%</li>
-            <li class="list-group-item"><strong>Liver Disease Model:</strong> 78%</li>
-            <li class="list-group-item"><strong>Malaria Model:</strong> 96%</li>
-            <li class="list-group-item"><strong>Pneumonia Model:</strong> 95%</li>
+    <div class="disease-info">
+      {% for disease in [
+        ('heart', 'Heart Disease', 'Predict cardiovascular risk using cholesterol, blood pressure, and lifestyle metrics.',
+          ['🧪 Clinical Parameters', '🧬 Genetic Markers', '🫀 Lifestyle Factors', '📖 Medical History'], '/heart'),
+        ('diabetes', 'Diabetes', 'Monitor blood sugar, insulin, BMI, and history for type 2 diabetes risk.',
+          ['🍬 Glucose Levels', '⚖️ BMI + Weight', '🧠 Age & Heritage'], '/diabetes'),
+        ('breast', 'Breast Cancer', 'Risk detection using diagnostic and cytology features.',
+          ['🔬 Radius, Texture, Smoothness', '🧫 Symmetry, Area, Compactness'], '/breast'),
+        ('liver', 'Liver Disease', 'Detection using enzyme levels and patient demographics.',
+          ['🧪 ALT, AST, Bilirubin', '🧓 Age, Albumin'], '/liver'),
+        ('kidney', 'Kidney Disease', 'Early-stage detection using blood and urine markers.',
+          ['🧫 Blood Urea, Creatinine', '🚽 Urine Gravity, RBC/WBC'], '/kidney'),
+        ('malaria', 'Malaria', 'Microscopic image-based detection of infected RBCs.',
+          ['🧬 Cell Image Classification', '📸 Convolutional Models'], '/malaria'),
+        ('pneumonia', 'Pneumonia', 'Prediction via chest X-rays using CNN models.',
+          ['🩻 Image Feature Extraction', '💨 Lungs, Infiltration, Shadows'], '/pneumonia')
+      ] %}
+      <div class="disease-panel {% if loop.first %}active{% endif %}" id="{{ disease[0] }}">
+        <h3>{{ disease[1] }}</h3>
+        <p>{{ disease[2] }}</p>
+        <ul>
+          {% for item in disease[3] %}
+          <li>{{ item }}</li>
+          {% endfor %}
         </ul>
+        <a href="{{ disease[4] }}" class="btn-link">Predict Now →</a>
+      </div>
+      {% endfor %}
     </div>
+  </div>
+</section>
 
-    <!-- Disease Information Section -->
-    <div class="card card-body mt-5" style="border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h3 class="text-center">Information About the Diseases We Predict</h3>
-        <p class="text-muted text-center">Learn about the diseases and their symptoms that our system can predict.</p>
-
-        <!-- Disease Cards -->
-        <div class="row">
-            <!-- Diabetes -->
-            <div class="col-md-6">
-                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body">
-                        <h4>Diabetes</h4>
-                        <p>Diabetes occurs when blood glucose levels are too high. Insulin is used to regulate glucose intake, and without it, glucose stays in the blood.</p>
-                        <h5>Symptoms</h5>
-                        <ul>
-                            <li>Urinating often</li>
-                            <li>Extreme thirst</li>
-                            <li>Fatigue</li>
-                            <li>Blurry vision</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Breast Cancer -->
-            <div class="col-md-6">
-                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body">
-                        <h4>Breast Cancer</h4>
-                        <p>Breast cancer forms in the cells of the breasts and is one of the most common cancers worldwide, especially in women.</p>
-                        <h5>Symptoms</h5>
-                        <ul>
-                            <li>Breast lump or thickening</li>
-                            <li>Changes in size, shape, or appearance</li>
-                            <li>Dimpling of the skin</li>
-                            <li>Redness or pitting of the skin</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<!-- Classifiers Section -->
+<section class="classifiers-section">
+    <h2>Classifiers Used for Prediction</h2>
+    <p>Advanced machine learning models driving your health insights.</p>
+  
+    <div class="classifier-grid">
+      {% for clf in [
+        ('Random Forest', 'Robust ensemble model with many decision trees.', 'RandomForest.webp'),
+        ('XGBoost', 'Gradient boosting framework with high performance.', 'xgboost.jpeg'),
+        ('Support Vector Machine', 'Separates data with hyperplanes and margin.', 'svm.jpeg'),
+        ('Logistic Regression', 'Binary classification using log odds.', 'logistic.webp')
+      ] %}
+      <div class="classifier-card-flip">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{{ url_for('static', filename='images/' + clf[2]) }}" alt="{{ clf[0] }}">
+            <h4>{{ clf[0] }}</h4>
+          </div>
+          <div class="card-back">
+            <p>{{ clf[1] }}</p>
+          </div>
         </div>
-
-        <!-- Kidney Disease & Liver Disease -->
-        <div class="row">
-            <!-- Chronic Kidney Disease -->
-            <div class="col-md-6">
-                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body">
-                        <h4>Chronic Kidney Disease</h4>
-                        <p>Chronic kidney disease is the gradual loss of kidney function. It leads to the accumulation of fluid and waste in the body.</p>
-                        <h5>Symptoms</h5>
-                        <ul>
-                            <li>Nausea</li>
-                            <li>Fatigue</li>
-                            <li>Weakness</li>
-                            <li>Muscle cramps</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Liver Disease -->
-            <div class="col-md-6">
-                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body">
-                        <h4>Liver Disease</h4>
-                        <p>Liver diseases include conditions where the liver is damaged, often causing swelling, jaundice, and easy bruising.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Malaria & Pneumonia -->
-        <div class="row">
-            <!-- Malaria -->
-            <div class="col-md-6">
-                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body">
-                        <h4>Malaria</h4>
-                        <p>Malaria is a mosquito-borne disease that causes fever, chills, and in some cases, can be fatal if not treated properly.</p>
-                        <h5>Symptoms</h5>
-                        <ul>
-                            <li>Fever</li>
-                            <li>Chills</li>
-                            <li>Headache</li>
-                            <li>Nausea</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pneumonia -->
-            <div class="col-md-6">
-                <div class="card mb-3" style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body">
-                        <h4>Pneumonia</h4>
-                        <p>Pneumonia is an infection that causes inflammation of the air sacs in the lungs, leading to difficulty breathing and coughing.</p>
-                        <h5>Symptoms</h5>
-                        <ul>
-                            <li>Cough with mucus</li>
-                            <li>Fever and chills</li>
-                            <li>Shortness of breath</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      </div>
+      {% endfor %}
     </div>
-</div>
+  </section>
+  
+<!-- How LifePulse Works -->
+<section class="how-it-works">
+  <h2>How LifePulse Works</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="icon">📋</span>
+      <h4>Input Your Data</h4>
+      <p>Securely provide health info through an intuitive UI. You're always in control.</p>
+    </div>
+    <div class="step">
+      <span class="icon">🧠</span>
+      <h4>AI Risk Analysis</h4>
+      <p>Receive disease risk predictions with detailed explanations from advanced AI models.</p>
+    </div>
+    <div class="step">
+      <span class="icon">📈</span>
+      <h4>Monitor Progression</h4>
+      <p>Track health risks over time and receive personalized health suggestions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-choose">
+  <h2>Why Choose LifePulse</h2>
+  <div class="benefits-grid">
+    <div class="benefit">✅ 95–99% Model Accuracy</div>
+    <div class="benefit">🧠 AI Explainability (SHAP/LIME)</div>
+    <div class="benefit">📊 Time-based Risk Progression</div>
+    <div class="benefit">🩺 Personalized Health Advice</div>
+    <div class="benefit">🔒 Secure & Private</div>
+    <div class="benefit">🧬 Multi-Disease System</div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="cta-banner">
+  <h2>Ready to Take Control of Your Health?</h2>
+  <p>Join thousands using LifePulse to predict and improve their health.</p>
+  <a href="/login" class="cta-btn">Login</a>
+  <a href="/signup" class="cta-btn secondary">Sign Up</a>
+</section>
+
+<!-- Script for Disease Tabs -->
+<script>
+  const tabs = document.querySelectorAll('.disease-menu li');
+  const panels = document.querySelectorAll('.disease-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.disease).classList.add('active');
+    });
+  });
+
+  function toggleDiseaseMenu() {
+    const menu = document.getElementById("diseaseMenu");
+    menu.classList.toggle("show");
+  }
+</script>
 
 {% endblock %}

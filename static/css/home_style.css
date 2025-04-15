@@ -1,0 +1,411 @@
+/* General Layout */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    background-color: #f8f9fa;
+  }
+  
+  .no-gap-top {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background: url('/static/pexels-tara-winstead-8386440.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .pulse-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0, 123, 255, 0.2), transparent 70%);
+    animation: heartbeat 2s ease-in-out infinite;
+    z-index: 0;
+  }
+  
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); opacity: 0.25; }
+    14%      { transform: scale(1.1); opacity: 0.4; }
+    28%      { transform: scale(1); opacity: 0.25; }
+    42%      { transform: scale(1.1); opacity: 0.4; }
+    70%      { transform: scale(1); opacity: 0.25; }
+  }
+  
+  
+  .hero-overlay {
+    z-index: 2;
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 40px;
+    border-radius: 10px;
+  }
+  
+  .hero-overlay h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .hero-overlay p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero-overlay .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .hero-overlay .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Disease Section */
+  .disease-section {
+    padding: 50px 5%;
+    background: white;
+  }
+  
+  .disease-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .subtext {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #555;
+  }
+  
+  .mobile-toggle {
+    display: none;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .disease-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .disease-menu {
+    flex: 1;
+    min-width: 200px;
+    margin-right: 30px;
+  }
+  
+  .disease-menu.sticky {
+    position: sticky;
+    top: 80px;
+  }
+  
+  .disease-menu ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .disease-menu li {
+    background-color: white;
+    border: 2px solid #007bff;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .disease-menu li:hover,
+  .disease-menu li.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .disease-info {
+    flex: 2.5;
+  }
+  
+  .disease-panel {
+    display: none;
+    animation: fade 0.5s ease;
+    background-color: #f0f5ff;
+    padding: 25px;
+    border-radius: 10px;
+  }
+  
+  .disease-panel.active {
+    display: block;
+  }
+  
+  .disease-panel h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  
+  .disease-panel ul {
+    padding-left: 20px;
+  }
+  
+  .btn-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Classifiers */
+  .classifiers-section {
+    padding: 60px 5%;
+    background-color: #eef6ff;
+    text-align: center;
+  }
+  
+  .classifier-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+  
+  .classifier-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 200px;
+    height: 300px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .classifier-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .classifier-card img {
+    width: 100px;
+    height: 200px;
+    margin-bottom: 10px;
+    object-fit: contain;
+  }
+  
+  .classifier-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* How It Works */
+  .how-it-works {
+    padding: 60px 5%;
+    background: white;
+    text-align: center;
+  }
+  
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+  
+  .step {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .step .icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Why Choose Us */
+  .why-choose {
+    padding: 60px 5%;
+    background: #eef6ff;
+    text-align: center;
+  }
+  
+  .benefits-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+  }
+  
+  .benefit {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    width: 220px;
+    text-align: center;
+  }
+  
+  /* CTA */
+  .cta-banner {
+    padding: 50px 20px;
+    background: #007bff;
+    color: white;
+    text-align: center;
+  }
+  
+  .cta-banner .cta-btn {
+    margin: 10px;
+    background-color: white;
+    color: #007bff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .cta-banner .cta-btn.secondary {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .cta-banner .cta-btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* Animations */
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .disease-container {
+      flex-direction: column;
+    }
+  
+    .mobile-toggle {
+      display: block;
+    }
+  
+    .disease-menu {
+      display: none;
+    }
+  
+    .disease-menu.show {
+      display: block;
+      margin-bottom: 20px;
+    }
+  
+    .classifier-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .steps {
+      flex-direction: column;
+    }
+  
+    .benefits-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+
+  .classifier-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+  
+  .classifier-card-flip {
+    width: 240px;
+    height: 300px;
+    perspective: 1000px;
+  }
+  
+  .card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  .classifier-card-flip:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    backface-visibility: hidden;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .card-front img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+  
+  .card-front h4 {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .card-back {
+    transform: rotateY(180deg);
+    background-color: #007bff;
+    color: white;
+    font-size: 0.9rem;
+  }
+  
