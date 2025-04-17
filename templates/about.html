@@ -1,0 +1,103 @@
+{% extends 'main.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about_style.css') }}">
+{% endblock %}
+
+
+{% block content %} 
+
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="hero-overlay">
+        <h1 class="about-hero-heading">YOUR HEALTH IS YOUR GREATEST POWER</h1>
+        <p class="about-hero-subtext">
+            Stay informed, stay ahead — because prevention starts with awareness.
+        </p>
+    </div>
+</section>
+
+<div class="about-wrapper">
+    <div class="about-nav">
+        <ul>
+            <li><button onclick="showSection('scope')"><i class="fas fa-drafting-compass"></i> Scope</button></li>
+            <li><button onclick="showSection('purpose')"><i class="fas fa-bullseye"></i> Purpose</button></li>
+            <li><button onclick="showSection('aims')"><i class="fas fa-chart-bar"></i> Aims</button></li>
+            <li><button onclick="showSection('users')"><i class="fas fa-user-friends"></i> Intended Users</button></li>
+        </ul>
+    </div>
+
+    <div class="about-content">
+        <section id="scope" class="about-section active">
+            <h2><i class="fas fa-drafting-compass"></i> Scope</h2>
+            <p>LifePulse is an AI-driven platform that predicts your risk for major diseases using smart, personalized health insights.
+                Stay informed, stay ahead — your health, powered by machine learning.</p>
+        </section>
+
+        <section id="purpose" class="about-section">
+            <h2><i class="fas fa-bullseye"></i> Purpose</h2>
+            <p>LifePulse was created with one purpose — to make health prediction simple, accessible, and reliable for everyone.
+
+                Many people delay seeking care because symptoms seem minor or unclear. With LifePulse, you can get a quick and intelligent risk assessment that encourages informed decisions. Our platform doesn't replace doctors — it supports your journey by making you more aware of your health trends.</p>
+        </section>
+
+        <section id="aims" class="about-section">
+            <h2><i class="fas fa-chart-bar"></i> Aims</h2>
+            <p>To provide early detection of health risks using AI models.
+
+                To give you a clear risk score for each condition.
+                
+                To allow you to track changes in your health over time.
+                
+                To present results with simple explanations, not just numbers.
+                
+                To support you in making better health decisions through awareness.
+                
+                To create a secure, private, and user-friendly experience for all.</p>
+        </section>
+
+        <section id="users" class="about-section">
+            <h2><i class="fas fa-user-friends"></i> Intended Users</h2>
+            <p>LifePulse is built for anyone who wants to stay proactive about their health.
+
+                Individuals & Families: Stay ahead of potential health issues with fast, AI-driven predictions.
+                
+                Health-Conscious Users: Use the platform to monitor lifestyle-related conditions like diabetes or heart disease.
+                
+                Students & Learners: Explore how technology and healthcare intersect.
+                
+                Clinics & Educators: Demonstrate AI health prediction in action for learning or community outreach.</p>
+        </section>
+    </div>
+</div>
+
+<!-- Machine Learning Process -->
+<div class="ml-process-section">
+    <h2 class="section-title"><i class="fas fa-chart-line"></i> Machine Learning Process</h2>
+    <div class="ml-cards-container">
+        {% for item in [
+            ('feature.png', 'Feature Engineering', 'We create intelligent features from your data to help the model learn effectively.'),
+            ('split.png', 'Splitting of Dataset', 'We divide the data into training (70%) and testing (30%) sets to evaluate model performance.'),
+            ('modeling.png', 'Modelling', 'We train machine learning models to understand patterns in your data.'),
+            ('training.png', 'Training', 'We feed labeled data to help the model learn useful patterns.'),
+            ('cv.png', 'Cross Validation & Grid Search', 'We use tuning methods like K-Fold and Grid Search to improve accuracy.')
+        ] %}
+        <div class="ml-card">
+            <div class="ml-bubble">
+                <img src="{{ url_for('static', filename='images/' + item[0]) }}" alt="{{ item[1] }}">
+            </div>
+            <p>{{ item[2] }}</p>
+            <span>{{ item[1] }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function showSection(id) {
+        const sections = document.querySelectorAll('.about-section');
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+</script>
+
+{% endblock %}

@@ -1,75 +1,106 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<div class="row"  style="margin-bottom: 175px;">
+<style>
+    .form-container {
+        background-color: #f8f9fa;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 2rem;
+        margin: 40px 0;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 4px;
+    }
+
+    .form-hint {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+    }
+
+    .form-submit {
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-group {
+            margin-bottom: 16px;
+        }
+    }
+</style>
+
+<div class="row" style="margin-bottom: 175px;">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <center><h1>Liver Disease Predictor</h1></center>
-        <div class="card card-body" style="border: 1px solid black;">
+        <div class="form-container">
+            <div class="form-title">Liver Disease Predictor</div>
             <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
-                <input type="hidden" name="disease" value="liver">
-            
+                <input type="hidden" name="disease" value="liver" />
+
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Age" placeholder="Age">
+                    {% set fields = [
+                        ('Age', 'Age', 'e.g., 18 to 90'),
+                        ('Total_Bilirubin', 'Total Bilirubin (mg/dL)', 'Normal range: 0.1 – 1.2'),
+                        ('Direct_Bilirubin', 'Direct Bilirubin (mg/dL)', 'Normal < 0.3'),
+                        ('Alkaline_Phosphotase', 'Alkaline Phosphotase (U/L)', 'Normal: 44 – 147'),
+                        ('Alamine_Aminotransferase', 'Alamine Aminotransferase (ALT)', 'Normal: 7 – 56 U/L'),
+                        ('Aspartate_Aminotransferase', 'Aspartate Aminotransferase (AST)', 'Normal: 10 – 40 U/L'),
+                        ('Total_Protiens', 'Total Proteins (g/dL)', 'Normal: 6.0 – 8.3'),
+                        ('Albumin', 'Albumin (g/dL)', 'Normal: 3.5 – 5.0'),
+                        ('Albumin_and_Globulin_Ratio', 'Albumin/Globulin Ratio', 'Ideal: 1.0 – 2.1'),
+                        ('Gender_Male', 'Gender', '1 for Male, 0 for Female')
+                    ] %}
+
+                    {% for field in fields %}
+                        {% if loop.index0 % 2 == 0 %}
+                            </div><div class="row">
+                        {% endif %}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="{{ field[0] }}">{{ field[1] }}:</label>
+                                <div class="form-hint">{{ field[2] }}</div>
+                                <input class="form-control" type="text" name="{{ field[0] }}" id="{{ field[0] }}" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Total_Bilirubin" placeholder="Total Bilirubin">
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Direct_Bilirubin" placeholder="Direct Bilirubin">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Alkaline_Phosphotase" placeholder="Alkaline Phosphotase">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Alamine_Aminotransferase" placeholder="Alamine Aminotransferase">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Aspartate_Aminotransferase" placeholder="Aspartate Aminotransferase">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Total_Protiens" placeholder="Total Protiens">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Albumin" placeholder="Albumin">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Albumin_and_Globulin_Ratio" placeholder="Albumin and Globulin Ratio">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input style="border: 1px solid black;" class="form-control" type="text" name="Gender_Male" placeholder="Gender(Male: 1, Female: 0)">
-                        </div>
-                    </div>
-                </div>
-                <input type="submit" class="btn btn-info btn-block" value="Predict">
+
+                <input type="submit" class="btn btn-primary btn-block form-submit" value="Predict">
             </form>
         </div>
     </div>

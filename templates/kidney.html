@@ -1,38 +1,110 @@
 {% extends 'main.html' %}
 {% block content %}
+
+<style>
+    .form-container {
+        background-color: #f8f9fa;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 2rem;
+        margin: 40px 0;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 4px;
+    }
+
+    .form-hint {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+    }
+
+    .form-submit {
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-group {
+            margin-bottom: 16px;
+        }
+    }
+</style>
+
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <center><h1>Kidney Disease Predictor</h1></center>
-        <div class="card card-body" style="border: 1px solid black;">
+        <div class="form-container">
+            <div class="form-title">Kidney Disease Predictor</div>
             <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
-                <input type="hidden" name="disease" value="kidney">
+                <input type="hidden" name="disease" value="kidney" />
 
                 <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="BMI" placeholder="BMI"></div>
-                    <div class="col-md-6"><input class="form-control" name="SystolicBP" placeholder="SystolicBP"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="FastingBloodSugar" placeholder="FastingBloodSugar"></div>
-                    <div class="col-md-6"><input class="form-control" name="HbA1c" placeholder="HbA1c"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="SerumCreatinine" placeholder="SerumCreatinine"></div>
-                    <div class="col-md-6"><input class="form-control" name="BUNLevels" placeholder="BUNLevels"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="GFR" placeholder="GFR"></div>
-                    <div class="col-md-6"><input class="form-control" name="ProteinInUrine" placeholder="ProteinInUrine (yes/no)"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="MuscleCramps" placeholder="MuscleCramps (yes/no)"></div>
-                    <div class="col-md-6"><input class="form-control" name="Itching" placeholder="Itching (yes/no)"></div>
-                </div><br>
+                    {% set fields = [
+                        ('BMI', 'Body Mass Index (BMI)', 'Normal range: 18.5 – 24.9'),
+                        ('SystolicBP', 'Systolic Blood Pressure (mmHg)', 'Typical range: 90 – 140'),
+                        ('FastingBloodSugar', 'Fasting Blood Sugar (mg/dL)', 'Normal < 100'),
+                        ('HbA1c', 'HbA1c (%)', 'Normal < 5.7%'),
+                        ('SerumCreatinine', 'Serum Creatinine (mg/dL)', 'Normal: 0.6 – 1.3'),
+                        ('BUNLevels', 'BUN Levels (mg/dL)', 'Normal: 7 – 20'),
+                        ('GFR', 'Glomerular Filtration Rate (GFR)', 'Normal > 90 mL/min'),
+                        ('ProteinInUrine', 'Protein in Urine', 'yes(1) or no(0)'),
+                        ('MuscleCramps', 'Muscle Cramps', 'yes(1) or no(0)'),
+                        ('Itching', 'Itching', 'yes(1) or no(0)')
+                    ] %}
 
-                <input type="submit" class="btn btn-info btn-block" value="Predict">
+                    {% for field in fields %}
+                        {% if loop.index0 % 2 == 0 %}
+                            </div><div class="row">
+                        {% endif %}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="{{ field[0] }}">{{ field[1] }}:</label>
+                                <div class="form-hint">{{ field[2] }}</div>
+                                <input class="form-control" type="text" name="{{ field[0] }}" id="{{ field[0] }}" required>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <input type="submit" class="btn btn-primary btn-block form-submit" value="Predict">
             </form>
         </div>
     </div>
     <div class="col-md-2"></div>
 </div>
+
 {% endblock %}

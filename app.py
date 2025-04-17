@@ -44,6 +44,13 @@ from io import BytesIO
 
 from flask import jsonify
 
+from markupsafe import Markup
+
+
+import uuid
+import os
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
+
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey123"
@@ -65,6 +72,8 @@ host = "cluster0.dwdu3pu.mongodb.net"
 # Connect to your MongoDB Atlas cluster
 app.config["MONGO_URI"] = f"mongodb+srv://{username}:{password}@{host}/lifepulse_db?retryWrites=true&w=majority"
 mongo = PyMongo(app)
+
+
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -133,6 +142,12 @@ def malariaPage():
 def pneumoniaPage():
     return render_template('pneumonia.html')
 
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
 @app.route('/predict', methods=['POST'])
 def predictPage():
     try:
@@ -146,7 +161,7 @@ def predictPage():
 
         model = models[disease]
 
-        # ✅ For malaria/pneumonia: Handle image
+        # ✅ Image-based prediction (no LIME)
         if disease in ['malaria', 'pneumonia']:
             file = request.files.get('image')
             if not file or file.filename == '':
@@ -168,7 +183,7 @@ def predictPage():
                 print(f"❌ Image processing error: {e}")
                 return render_template("home.html", message="Error processing image.")
 
-        # ✅ For tabular models
+        # ✅ Tabular input handling
         to_predict_dict.pop('disease', None)
         raw_input = list(to_predict_dict.values())
         print("🔎 Raw Inputs:", raw_input)
@@ -233,39 +248,52 @@ def predictPage():
         else:
             prediction = int(prediction)
 
-
-
-
+        # ✅ Log the prediction
         log_disease_prediction(
-        username=current_user.username,  # ✅ Dynamically logs under logged-in user
-        disease=disease,
-        input_data=processed_inputs,
-        prediction=prediction,
-        health_score=health_score
+            username=current_user.username,
+            disease=disease,
+            input_data=processed_inputs,
+            prediction=prediction,
+            health_score=health_score
         )
 
+        # ✅ Generate new LIME HTML file
+        try:
+            if fields and to_predict_np is not None:
+                dummy_data = np.tile(to_predict_np, (100, 1)) + np.random.normal(0, 0.1, size=(100, to_predict_np.shape[1]))
+                explainer = LimeTabularExplainer(
+                    training_data=dummy_data,
+                    feature_names=fields,
+                    class_names=['Not at Risk', 'At Risk'],
+                    mode='classification'
+                )
+                explanation = explainer.explain_instance(to_predict_np[0], model.predict_proba)
 
+                lime_id = str(uuid.uuid4())
+                lime_path = f'lime_cache/{lime_id}.html'
+                os.makedirs('lime_cache', exist_ok=True)
+                explanation.save_to_file(lime_path)
+                session['lime_filename'] = lime_id + ".html"
+        except Exception as e:
+            print(f"❌ LIME generation failed: {e}")
+            session['lime_path'] = None
 
-        return render_template('predict.html', pred=prediction, disease=disease, health_score=health_score)
+        session['last_disease'] = disease
 
-
-
-        if fields:
-            dummy_data = np.array([to_predict_np[0]] * 100)
-            explainer = LimeTabularExplainer(
-                training_data=dummy_data,
-                feature_names=fields,
-                class_names=['Not at Risk', 'At Risk'],
-                mode='classification'
-            )
-            explanation = explainer.explain_instance(to_predict_np[0], model.predict_proba)
-            explanation.save_to_file('static/lime_explanation.html')
-
-        return render_template('predict.html', pred=prediction, disease=disease, health_score=health_score)
+        return render_template(
+            'predict.html',
+            pred=prediction,
+            disease=disease,
+            health_score=health_score
+        )
 
     except Exception as e:
         print(f"❌ Error during prediction: {e}")
         return render_template("home.html", message=f"Unexpected error: {e}")
+
+
+    
+
 
 @app.route('/predict_malaria', methods=['POST'])
 def malariapredictPage():
@@ -307,7 +335,6 @@ def malariapredictPage():
         print("❌ Error during malaria prediction:", e)
         return render_template('malaria.html', message=f"Error: {e}")
 
-    
 
 @app.route('/predict_pneumonia', methods=['POST'])
 def pneumoniapredictPage():
@@ -450,6 +477,12 @@ def progression_api(disease):
         }).sort("timestamp", 1)
     )
 
+
+# @app.route('/explanation')
+# def view_explanation():
+#     return render_template('view_lime.html')
+
+
     # Return as JSON
     data = {
         "timestamps": [log["timestamp"].strftime("%Y-%m-%d %H:%M") for log in logs],
@@ -458,6 +491,25 @@ def progression_api(disease):
     return data
 
 
+
+@app.route('/lime/<filename>')
+def serve_lime_file(filename):
+    try:
+        return send_from_directory('lime_cache', filename)
+    except Exception as e:
+        return f"<h3>Error loading LIME explanation: {e}</h3>"
+
+
+@app.route('/view_lime')
+def view_lime_page():
+    lime_filename = session.get('lime_filename')
+    disease = session.get('last_disease')
+
+    if lime_filename and os.path.exists(os.path.join('lime_cache', lime_filename)):
+        lime_url = url_for('serve_lime_file', filename=lime_filename)
+        return render_template("view_lime.html", lime_url=lime_url, disease=disease)
+
+    return render_template("error.html", message="No LIME explanation found.")
 
 
 if __name__ == '__main__':

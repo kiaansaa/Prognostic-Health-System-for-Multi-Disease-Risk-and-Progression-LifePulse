@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lime_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="lime-container">
+    <h1 class="lime-title">🧠 AI Explanation (LIME)</h1>
+    <p class="lime-subtitle">This section shows how each input influenced your prediction result.</p>
+
+    <!-- Instruction -->
+    <div class="lime-guide">
+        <h4>🧾 How to Read This:</h4>
+        <ul>
+            <li><strong>Prediction probabilities</strong> (top left): How confident the model is in each class.</li>
+            <li><strong>Bar Chart</strong> (middle): Shows which features push you toward “At Risk” or “Not at Risk.”</li>
+            <li><strong>Right Table</strong>: Lists the input values that were analyzed.</li>
+        </ul>
+        <p>🟧 Orange bars indicate features pushing toward <strong>At Risk</strong>, while 🟦 blue means <strong>Not at Risk</strong>.</p>
+    </div>
+
+    <!-- LIME iframe -->
+    <div class="lime-frame-container">
+        <iframe 
+            src="{{ url_for('serve_lime_file', filename=session.get('lime_path').split('/')[-1]) }}" 
+            frameborder="0" 
+            class="lime-iframe"
+            width="100%" 
+            height="800px"
+            style="border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+        </iframe>
+    </div>
+    
+
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-primary">← Back to Home</a>
+    </div>
+</div>
+
+
+{% endblock %}

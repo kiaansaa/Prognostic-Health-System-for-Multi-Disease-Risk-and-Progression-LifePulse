@@ -1,39 +1,110 @@
 {% extends 'main.html' %}
 {% block content %}
+
+<style>
+    .form-container {
+        background-color: #f8f9fa;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 2rem;
+        margin: 40px 0;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 4px;
+    }
+
+    .form-hint {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+    }
+
+    .form-submit {
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-group {
+            margin-bottom: 16px;
+        }
+    }
+</style>
+
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <center><h1>Breast Cancer Predictor</h1></center>
-        <div class="card card-body" style="border: 1px solid black;">
+        <div class="form-container">
+            <div class="form-title">Breast Cancer Predictor</div>
             <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
-                <input type="hidden" name="disease" value="breast_cancer">
+                <input type="hidden" name="disease" value="breast_cancer" />
 
-                <!-- Your input fields here -->
                 <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="radius_mean" placeholder="radius_mean"></div>
-                    <div class="col-md-6"><input class="form-control" name="texture_mean" placeholder="texture_mean"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="perimeter_mean" placeholder="perimeter_mean"></div>
-                    <div class="col-md-6"><input class="form-control" name="area_mean" placeholder="area_mean"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="smoothness_mean" placeholder="smoothness_mean"></div>
-                    <div class="col-md-6"><input class="form-control" name="compactness_mean" placeholder="compactness_mean"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="concavity_mean" placeholder="concavity_mean"></div>
-                    <div class="col-md-6"><input class="form-control" name="concave_points_mean" placeholder="concave_points_mean"></div>
-                </div><br>
-                <div class="row">
-                    <div class="col-md-6"><input class="form-control" name="symmetry_mean" placeholder="symmetry_mean"></div>
-                    <div class="col-md-6"><input class="form-control" name="fractal_dimension_mean" placeholder="fractal_dimension_mean"></div>
-                </div><br>
+                    {% set fields = [
+                        ('radius_mean', 'Radius Mean', 'Typical range: 6 to 28'),
+                        ('texture_mean', 'Texture Mean', 'Typical range: 9 to 40'),
+                        ('perimeter_mean', 'Perimeter Mean', 'Typical range: 43 to 190'),
+                        ('area_mean', 'Area Mean', 'Typical range: 143 to 2500'),
+                        ('smoothness_mean', 'Smoothness Mean', 'Typical range: 0.05 to 0.16'),
+                        ('compactness_mean', 'Compactness Mean', 'Typical range: 0.01 to 0.35'),
+                        ('concavity_mean', 'Concavity Mean', 'Typical range: 0.01 to 0.4'),
+                        ('concave_points_mean', 'Concave Points Mean', 'Typical range: 0.01 to 0.2'),
+                        ('symmetry_mean', 'Symmetry Mean', 'Typical range: 0.1 to 0.3'),
+                        ('fractal_dimension_mean', 'Fractal Dimension Mean', 'Typical range: 0.05 to 0.1')
+                    ] %}
 
-                <input type="submit" class="btn btn-info btn-block" value="Predict">
+                    {% for field in fields %}
+                        {% if loop.index0 % 2 == 0 %}
+                            </div><div class="row">
+                        {% endif %}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="{{ field[0] }}">{{ field[1] }}:</label>
+                                <div class="form-hint">{{ field[2] }}</div>
+                                <input class="form-control" type="text" name="{{ field[0] }}" id="{{ field[0] }}" required>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <input type="submit" class="btn btn-primary btn-block form-submit" value="Predict">
             </form>
         </div>
     </div>
     <div class="col-md-2"></div>
 </div>
+
 {% endblock %}

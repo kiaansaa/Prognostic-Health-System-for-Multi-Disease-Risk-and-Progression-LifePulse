@@ -1,0 +1,217 @@
+/* GLOBAL BASE */
+body {
+    margin: 0;
+    padding-top: 120px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    scroll-behavior: smooth;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  
+  .container,
+  .container-fluid {
+    padding-top: 20px;
+  }
+  
+  /* NAVBAR STYLES */
+  .navbar {
+    background-color: #007bff;
+    padding: 10px 20px;
+    z-index: 999;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .navbar-nav .nav-link {
+    color: white !important;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: color 0.3s;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #00bfff !important;
+  }
+
+  nav a.active {
+    text-decoration: none;
+    color: white;
+  }
+  
+  
+  #theme-toggle {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.3s ease;
+  }
+  
+  #theme-toggle:hover {
+    transform: scale(1.1);
+  }
+  
+  /* FOOTER SECTION */
+  .footer-section {
+    background-color: #0d1117;
+    color: #ccc;
+    padding: 50px 5%;
+    font-size: 14px;
+    margin-top: 50px;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 16px;
+  }
+  
+  .footer-links a:hover {
+    color: #fff;
+  }
+  
+  .footer-bottom {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  #scrollTopBtn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  #scrollTopBtn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* DARK MODE STYLES */
+  body.dark-mode {
+    background-color: #111 !important;
+    color: #f8f8f8;
+  }
+  
+  body.dark-mode .navbar,
+  body.dark-mode .footer-section {
+    background-color: #000 !important;
+  }
+  
+  body.dark-mode .footer-links a,
+  body.dark-mode .footer-bottom p {
+    color: #ccc !important;
+  }
+  
+  body.dark-mode .nav-link {
+    color: #f1f1f1 !important;
+  }
+  
+  body.dark-mode #theme-toggle {
+    color: #f8f8f8;
+  }
+  
+  body.dark-mode .footer-links a:hover {
+    color: white !important;
+  }
+  
+
+  /* === DARK MODE FIXES FOR MAIN CONTENT === */
+
+body.dark-mode .hero-section,
+body.dark-mode .disease-section,
+body.dark-mode .how-it-works,
+body.dark-mode .why-choose,
+body.dark-mode .cta-banner {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-mode .hero-overlay {
+  background: rgba(0, 0, 0, 0.7); /* darken overlay */
+}
+
+body.dark-mode .disease-menu li {
+  background-color: #1f1f1f;
+  color: #f8f8f8;
+  border-color: #333;
+}
+
+body.dark-mode .disease-menu li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+body.dark-mode .disease-panel {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .btn-link {
+  color: #66b3ff;
+}
+
+body.dark-mode .btn-link:hover {
+  color: #3399ff;
+}
+
+
+
+body.dark-mode .classifiers-section {
+  background-color: #101010;
+}
+
+body.dark-mode .classifier-card-flip .card-front,
+body.dark-mode .classifier-card-flip .card-back {
+  background-color: #1c1c1c;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+
+body.dark-mode .step,
+body.dark-mode .benefit {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+  border: 1px solid #333;
+}
+
+
+
+/* Ensure table readability in dark mode */
+body.dark-mode table,
+body.dark-mode th,
+body.dark-mode td {
+  color: #f1f1f1 !important;
+  border-color: #444;
+}
+
+/* Optional: add a slightly lighter background for contrast */
+body.dark-mode table {
+  background-color: #111;
+}
+
+body.dark-mode th {
+  background-color: #222;
+  font-weight: bold;
+}
+
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

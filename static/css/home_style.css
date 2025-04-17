@@ -48,7 +48,7 @@ html, body {
     z-index: 2;
     text-align: center;
     color: white;
-    background: rgba(0, 0, 0, 0.4);
+    /* background: rgba(0, 0, 0, 0.4); */
     padding: 40px;
     border-radius: 10px;
   }
@@ -281,14 +281,15 @@ html, body {
   
   /* CTA */
   .cta-banner {
-    padding: 50px 20px;
+    padding: 150px 20px;
     background: #007bff;
     color: white;
     text-align: center;
+    
   }
   
   .cta-banner .cta-btn {
-    margin: 10px;
+    margin: 20px;
     background-color: white;
     color: #007bff;
     padding: 10px 25px;
@@ -407,5 +408,71 @@ html, body {
     background-color: #007bff;
     color: white;
     font-size: 0.9rem;
+  }
+  
+
+
+#footer_styling
+  .footer-section {
+    background-color: #0d1117;
+    color: #ccc;
+    padding: 40px 5%;
+    font-size: 14px;
+    position: relative;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .footer-brand h2 {
+    font-size: 28px;
+    margin-bottom: 5px;
+  }
+  
+  .footer-brand p {
+    margin: 0;
+    color: #ccc;
+  }
+  
+  .footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: 0.3s ease;
+  }
+  
+  .footer-links a:hover {
+    color: #fff;
+  }
+  
+  .footer-bottom {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  
+  #scrollTopBtn {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+  }
+  
+  #scrollTopBtn:hover {
+    background-color: #0056b3;
   }
   

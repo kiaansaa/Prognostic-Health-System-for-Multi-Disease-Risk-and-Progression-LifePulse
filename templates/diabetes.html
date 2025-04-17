@@ -1,40 +1,101 @@
 {% extends 'main.html' %}
 {% block content %}
+
+<style>
+    .form-container {
+        background-color: #f8f9fa;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 2rem;
+        margin: 40px 0;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 4px;
+    }
+
+    .form-hint {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+    }
+
+    .form-submit {
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-group {
+            margin-bottom: 16px;
+        }
+    }
+</style>
+
 {% if message %}
     <div class="alert alert-danger">{{ message }}</div>
 {% endif %}
+
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        <center><h1>Diabetes Predictor</h1></center>
-        <div class="card card-body" style="border: 1px solid black;">
+        <div class="form-container">
+            <div class="form-title">Diabetes Predictor</div>
             <form class="form-horizontal" action="{{ url_for('predictPage') }}" method="POST">
-                <input type="hidden" name="disease" value="diabetes">
+                <input type="hidden" name="disease" value="diabetes" />
+
+                {% set fields = [
+                    ('pregnancies', 'Number of Pregnancies', '0 or more'),
+                    ('glucose', 'Glucose Level (mg/dL)', 'Typically between 70 and 200'),
+                    ('bloodpressure', 'Blood Pressure (mmHg)', 'Typically between 60 and 130'),
+                    ('skinthickness', 'Skin Thickness (mm)', 'Common range: 10 to 80'),
+                    ('insulin', 'Insulin Level (IU/mL)', 'Common range: 15 to 276'),
+                    ('bmi', 'Body Mass Index (kg/m²)', 'Typically 18.5 to 50'),
+                    ('dpf', 'Diabetes Pedigree Function', 'e.g., 0.47'),
+                    ('age', 'Age (years)', 'e.g., 21 to 81')
+                ] %}
+
+                {% for field in fields %}
                 <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="pregnancies" placeholder="Number of Pregnancies eg. 0">
+                    <label class="form-label" for="{{ field[0] }}">{{ field[1] }}:</label>
+                    <div class="form-hint">{{ field[2] }}</div>
+                    <input class="form-control" type="text" name="{{ field[0] }}" id="{{ field[0] }}" required>
                 </div>
-                <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="glucose" placeholder="Glucose (mg/dL) eg. 80">
-                </div>
-                <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="bloodpressure" placeholder="Blood Pressure (mmHg) eg. 80">
-                </div>
-                <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="skinthickness" placeholder="Skin Thickness (mm) eg. 20">
-                </div>
-                <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="insulin" placeholder="Insulin Level (IU/mL) eg. 80">
-                </div>
-                <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="bmi" placeholder="Body Mass Index (kg/m²) eg. 23.1">
-                </div>
-                <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="dpf" placeholder="Diabetes Pedigree Function eg. 0.52">
-                </div>
-                <div class="form-group">
-                    <input style="border: 1px solid black;" class="form-control" type="text" name="age" placeholder="Age (years) eg. 34">
-                </div>
-                <input type="submit" class="btn btn-info btn-block" value="Predict">
+                {% endfor %}
+
+                <input type="submit" class="btn btn-primary btn-block form-submit" value="Predict">
             </form>
         </div>
     </div>

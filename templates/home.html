@@ -26,7 +26,7 @@
       <ul>
         <li class="active" data-disease="heart">❤️ Heart Disease</li>
         <li data-disease="diabetes">🩸 Diabetes</li>
-        <li data-disease="breast">🎗️ Breast Cancer</li>
+        <li data-disease="cancer">🎗️ Breast Cancer</li>
         <li data-disease="liver">🧬 Liver Disease</li>
         <li data-disease="kidney">💧 Kidney Disease</li>
         <li data-disease="malaria">🦟 Malaria</li>
@@ -39,8 +39,8 @@
           ['🧪 Clinical Parameters', '🧬 Genetic Markers', '🫀 Lifestyle Factors', '📖 Medical History'], '/heart'),
         ('diabetes', 'Diabetes', 'Monitor blood sugar, insulin, BMI, and history for type 2 diabetes risk.',
           ['🍬 Glucose Levels', '⚖️ BMI + Weight', '🧠 Age & Heritage'], '/diabetes'),
-        ('breast', 'Breast Cancer', 'Risk detection using diagnostic and cytology features.',
-          ['🔬 Radius, Texture, Smoothness', '🧫 Symmetry, Area, Compactness'], '/breast'),
+        ('cancer', 'Breast Cancer', 'Risk detection using diagnostic and cytology features.',
+          ['🔬 Radius, Texture, Smoothness', '🧫 Symmetry, Area, Compactness'], '/cancer'),
         ('liver', 'Liver Disease', 'Detection using enzyme levels and patient demographics.',
           ['🧪 ALT, AST, Bilirubin', '🧓 Age, Albumin'], '/liver'),
         ('kidney', 'Kidney Disease', 'Early-stage detection using blood and urine markers.',
@@ -154,5 +154,12 @@
     menu.classList.toggle("show");
   }
 </script>
+
+<script>
+  document.getElementById("scrollTopBtn").addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
 
 {% endblock %}

@@ -20,3 +20,6 @@ __pycache__/
 
 # Ignore VSCode settings (optional)
 .vscode/
+
+# Ignore LIME cache explanations
+lime_cache/

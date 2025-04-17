@@ -1,0 +1,121 @@
+.result-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+    background: #f9f9f9;
+    min-height: 90vh;
+}
+
+.result-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.status-risk {
+    color: #e63946;
+    font-weight: bold;
+}
+
+.status-safe {
+    color: #2a9d8f;
+    font-weight: bold;
+}
+
+.status-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.score-section {
+    margin-top: 30px;
+}
+
+.score-label {
+    font-size: 32px;
+    font-weight: bold;
+    display: block;
+    margin: 15px 0;
+}
+
+.score-label.good {
+    color: #28a745;
+}
+
+.score-label.medium {
+    color: #ffc107;
+}
+
+.score-label.low {
+    color: #dc3545;
+}
+
+.score-legend p {
+    margin: 3px 0;
+    font-size: 14px;
+}
+
+.score-legend .good {
+    color: #28a745;
+}
+
+.score-legend .medium {
+    color: #ffc107;
+}
+
+.score-legend .low {
+    color: #dc3545;
+}
+
+.suggestions-box {
+    background: #eef9f3;
+    border-left: 5px solid #28a745;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-outline {
+    border: 2px solid #333;
+    color: #333;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-primary:hover,
+.btn-outline:hover {
+    opacity: 0.9;
+    transition: all 0.3s;
+}

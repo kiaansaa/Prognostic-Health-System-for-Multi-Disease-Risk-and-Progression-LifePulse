@@ -1,0 +1,330 @@
+/* === HERO SECTION === */
+.about-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('../lifepulseimage.jpeg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -80px;
+    z-index: 1;
+}
+
+.hero-overlay {
+    /* background: rgba(0, 0, 0, 0.4); */
+    backdrop-filter: blur(4px);
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+    color: #ffffff;
+    max-width: 800px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.about-hero-heading {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.about-hero-subtext {
+    font-size: 1.3rem;
+    color: #fbfefe;
+    line-height: 1.7;
+}
+
+/* === SIDEBAR NAVIGATION + ABOUT SECTIONS === */
+.about-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 3rem 2rem;
+    background-color: #f8f9fa;
+}
+
+.about-nav {
+    width: 20%;
+    margin-right: 2rem;
+    position: sticky;
+    top: 100px;
+}
+
+.about-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-nav li {
+    margin-bottom: 20px;
+}
+
+.about-nav button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.about-nav button:hover {
+    color: #007bff;
+}
+
+.about-content {
+    width: 80%;
+}
+
+.about-section {
+    display: none;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.about-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #2c3e50;
+}
+
+.about-section p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #444;
+}
+
+/* === MACHINE LEARNING PROCESS === */
+.ml-process-section {
+    padding: 4rem 2rem;
+    background-color: #f9fafc;
+    text-align: center;
+}
+
+.ml-process-section .section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.ml-cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.ml-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem 2rem;
+    width: 260px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.ml-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.ml-bubble {
+    background-color: #007bff;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.ml-bubble img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+.ml-card p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.ml-card span {
+    display: block;
+    font-weight: 600;
+    color: #007bff;
+    font-size: 1rem;
+}
+
+/* === RESPONSIVE STYLING === */
+@media (max-width: 768px) {
+    .about-wrapper {
+        flex-direction: column;
+    }
+
+    .about-nav,
+    .about-content {
+        width: 100%;
+    }
+
+    .about-nav {
+        margin-bottom: 2rem;
+    }
+
+    .about-hero {
+        height: 60vh;
+    }
+
+    .about-hero-heading {
+        font-size: 2rem;
+    }
+
+    .about-hero-subtext {
+        font-size: 0.95rem;
+    }
+
+    .ml-cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ml-card {
+        width: 90%;
+    }
+}
+
+
+
+/* === DARK MODE STYLING FOR ABOUT PAGE === */
+
+body.dark-mode .about-hero {
+    background: rgba(0, 0, 0, 0.6) url('../lifepulseimage.jpeg') no-repeat center center/cover;
+    color: #f1f1f1;
+  }
+  
+  body.dark-mode .hero-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+  }
+  
+  body.dark-mode .about-section {
+    background-color: #1f1f1f;
+    color: #f1f1f1;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+  }
+  
+  body.dark-mode .about-nav button {
+    color: #ccc;
+  }
+  
+  body.dark-mode .about-nav button:hover {
+    color: #fff;
+  }
+  
+  body.dark-mode .about-section h2 {
+    color: #e0e0e0;
+  }
+  
+  body.dark-mode .about-section p {
+    color: #ddd;
+  }
+  
+  body.dark-mode .ml-process-section {
+    background-color: #121212;
+    color: #f1f1f1;
+  }
+  
+  body.dark-mode .ml-card {
+    background-color: #1c1c1c;
+    border: 1px solid #333;
+    color: #f0f0f0;
+  }
+  
+  body.dark-mode .ml-card span {
+    color: #66b3ff;
+  }
+  
+  body.dark-mode .ml-bubble {
+    background-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+  }
+
+  
+  /* === DARK MODE SIDEBAR FIX === */
+body.dark-mode .about-wrapper {
+    background-color: #121212;
+  }
+  
+  body.dark-mode .about-nav {
+    background-color: #1a1a1a;
+  }
+  
+  body.dark-mode .about-nav button {
+    color: #ccc;
+  }
+  
+  body.dark-mode .about-nav button:hover,
+  body.dark-mode .about-nav button:focus {
+    color: white;
+  }
+  
+  body.dark-mode .about-nav button.active {
+    color: white;
+    font-weight: bold;
+  }
+
+/* === DARK MODE FIX: Machine Learning Section === */
+body.dark-mode .ml-process-section {
+    background-color: #111;
+  }
+  
+  body.dark-mode .ml-card {
+    background-color: #1a1a1a;
+    color: #eaeaea;
+    border: 1px solid #333;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.03);
+  }
+  
+  body.dark-mode .ml-card p {
+    color: #ccc;
+  }
+  
+  body.dark-mode .ml-card span {
+    color: #4da6ff;
+  }
+  
+  body.dark-mode .ml-process-section .section-title {
+    color: #f1f1f1;
+  }
+  
