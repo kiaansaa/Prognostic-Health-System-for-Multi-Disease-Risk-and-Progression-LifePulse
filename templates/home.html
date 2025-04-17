@@ -72,11 +72,12 @@
   
     <div class="classifier-grid">
       {% for clf in [
-        ('Random Forest', 'Robust ensemble model with many decision trees.', 'RandomForest.webp'),
-        ('XGBoost', 'Gradient boosting framework with high performance.', 'xgboost.jpeg'),
-        ('Support Vector Machine', 'Separates data with hyperplanes and margin.', 'svm.jpeg'),
-        ('Logistic Regression', 'Binary classification using log odds.', 'logistic.webp')
+        ("Random Forest", "Random Forest is like asking multiple decision trees for their opinion and going with the majority. It boosts accuracy and reduces overfitting by combining many models.", "RandomForest.webp"),
+        ("XGBoost", "XGBoost is a powerful boosting algorithm that builds models step-by-step, correcting mistakes along the way. It's known for speed and top-tier accuracy.", "xgboost.jpeg"),
+        ("Support Vector Machine", "SVM finds the best line or boundary that separates classes in your data. It's great for both simple and complex classification problems.", "svm.jpeg"),
+        ("Logistic Regression", "Logistic Regression is used for classification. It predicts probabilities and is ideal for binary outcomes like disease vs. no disease.", "logistic.webp")
       ] %}
+      
       <div class="classifier-card-flip">
         <div class="card-inner">
           <div class="card-front">
@@ -127,13 +128,21 @@
   </div>
 </section>
 
-<!-- Final CTA -->
-<section class="cta-banner">
-  <h2>Ready to Take Control of Your Health?</h2>
-  <p>Join thousands using LifePulse to predict and improve their health.</p>
-  <a href="/login" class="cta-btn">Login</a>
-  <a href="/signup" class="cta-btn secondary">Sign Up</a>
+{% if not current_user.is_authenticated %}
+<!-- Final CTA (Only for guests) -->
+<section class="cta-banner enhanced-cta">
+  <div class="cta-container">
+    <h2 class="cta-heading">Ready to Take Control of Your Health?</h2>
+    <p class="cta-subtext">Join thousands using LifePulse to predict and improve your health.</p>
+    <div class="cta-buttons">
+      <a href="{{ url_for('login') }}" class="cta-btn login-btn">Login</a>
+      <a href="{{ url_for('signup') }}" class="cta-btn signup-btn">Sign Up</a>
+    </div>
+  </div>
 </section>
+{% endif %}
+
+
 
 <!-- Script for Disease Tabs -->
 <script>

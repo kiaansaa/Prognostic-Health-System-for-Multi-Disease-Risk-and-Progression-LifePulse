@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 import matplotlib
 matplotlib.use('Agg')  
 import matplotlib.pyplot as plt
+from flask import request
 
 import warnings
 
@@ -381,13 +382,37 @@ def pneumoniapredictPage():
         return render_template('pneumonia.html', message=f"Error: {e}")
 
 
-@app.route('/dashboard/<username>')
+# @app.route('/dashboard/<username>')
+# @login_required
+# def userDashboard(username):
+#     from mongo_setup import get_db
+#     db = get_db()
+#     logs = list(db["disease_logs"].find({"username": username}).sort("timestamp", -1))
+#     return render_template('dashboard.html', username=username, logs=logs)
+
+@app.route("/dashboard/<username>")
 @login_required
 def userDashboard(username):
-    from mongo_setup import get_db
+    disease_filter = request.args.get("disease")
+    date_filter = request.args.get("date")
+
     db = get_db()
-    logs = list(db["disease_logs"].find({"username": username}).sort("timestamp", -1))
-    return render_template('dashboard.html', username=username, logs=logs)
+    query = {"username": username}
+
+    if disease_filter:
+        query["disease"] = disease_filter.lower()
+    if date_filter:
+        try:
+            selected_date = datetime.strptime(date_filter, "%Y-%m-%d").date()
+            query["timestamp"] = {
+                "$gte": datetime.combine(selected_date, datetime.min.time()),
+                "$lt": datetime.combine(selected_date, datetime.max.time())
+            }
+        except Exception as e:
+            print("Date filter parsing error:", e)
+
+    logs = list(db["disease_logs"].find(query).sort("timestamp", -1))
+    return render_template("dashboard.html", username=username, logs=logs)
 
 
 

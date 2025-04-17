@@ -279,7 +279,7 @@ html, body {
     text-align: center;
   }
   
-  /* CTA */
+  /* CTA
   .cta-banner {
     padding: 150px 20px;
     background: #007bff;
@@ -306,7 +306,92 @@ html, body {
   
   .cta-banner .cta-btn:hover {
     opacity: 0.9;
+  } */
+
+
+  /* Enhanced Final CTA Section */
+.enhanced-cta {
+  background: linear-gradient(135deg, #007bff, #0056d2);
+  color: white;
+  padding: 160px 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  /* border-top-left-radius: 30px; */
+  /* border-top-right-radius: 30px; */
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.cta-subtext {
+  font-size: 1.2rem;
+  margin-bottom: 50px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.login-btn {
+  background-color: white;
+  color: #007bff;
+  border: 2px solid white;
+}
+
+.signup-btn {
+  background-color: #00c851;
+  color: white;
+  border: 2px solid transparent;
+}
+
+.login-btn:hover {
+  background-color: transparent;
+  color: white;
+}
+
+.signup-btn:hover {
+  background-color: #009f3e;
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .cta-heading {
+    font-size: 2rem;
   }
+
+  .cta-subtext {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
   
   /* Animations */
   @keyframes fade {

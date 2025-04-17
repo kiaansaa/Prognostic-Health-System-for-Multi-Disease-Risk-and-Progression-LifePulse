@@ -136,10 +136,10 @@ body.dark-mode .hero-section,
 body.dark-mode .disease-section,
 body.dark-mode .how-it-works,
 body.dark-mode .why-choose,
-body.dark-mode .cta-banner {
+/* body.dark-mode .cta-banner {
   background-color: #121212;
   color: #f1f1f1;
-}
+} */
 
 body.dark-mode .hero-overlay {
   background: rgba(0, 0, 0, 0.7); /* darken overlay */
@@ -189,6 +189,38 @@ body.dark-mode .benefit {
   color: #f1f1f1;
   box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
   border: 1px solid #333;
+}
+
+
+/* Dark mode fixes for CTA banner */
+body.dark-mode .enhanced-cta {
+  background: linear-gradient(135deg, #1c1c1c, #121212);
+  color: #f1f1f1;
+}
+
+body.dark-mode .enhanced-cta .cta-subtext {
+  color: #ccc;
+}
+
+body.dark-mode .enhanced-cta .login-btn {
+  background-color: #f1f1f1;
+  color: #111;
+  border-color: #f1f1f1;
+}
+
+body.dark-mode .enhanced-cta .signup-btn {
+  background-color: #00c851;
+  color: white;
+}
+
+body.dark-mode .enhanced-cta .login-btn:hover {
+  background-color: transparent;
+  color: #f1f1f1;
+  border-color: #f1f1f1;
+}
+
+body.dark-mode .enhanced-cta .signup-btn:hover {
+  background-color: #009f3e;
 }
 
 
