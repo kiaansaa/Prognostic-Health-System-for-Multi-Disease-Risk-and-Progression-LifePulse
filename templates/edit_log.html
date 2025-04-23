@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{% block head %}
+<style>
+    .edit-container {
+        max-width: 900px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    }
+    .form-label {
+        font-weight: 500;
+        margin-top: 15px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-control:focus {
+        box-shadow: 0 0 5px #007bff;
+    }
+    .disease-badge {
+        background: #007bff;
+        color: #fff;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="edit-container">
+    <h2 class="text-center mb-3">Edit Health Inputs</h2>
+    <p class="text-center mb-4">Disease: <span class="disease-badge">{{ disease.title() }}</span></p>
+
+    <form method="POST">
+        <div class="row">
+            {% for val, label in zip(log.input_data, fields) %}
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">{{ label }}</label>
+                    <input type="text" name="inputs" value="{{ val }}" class="form-control" required>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success px-4">
+                💾 Save Changes
+            </button>
+            <a href="{{ url_for('userDashboard', username=current_user.username) }}" class="btn btn-secondary ms-2">← Cancel</a>
+        </div>
+    </form>
+</div>
+
+<!-- Toast Confirmation (only if ?updated=true in URL) -->
+{% if request.args.get('updated') == 'true' %}
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+  <div id="saveToast" class="toast align-items-center text-bg-success border-0 show" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">
+        ✅ Health inputs updated successfully.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

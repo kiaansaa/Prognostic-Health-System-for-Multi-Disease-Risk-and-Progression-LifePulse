@@ -1,178 +1,169 @@
-/* GLOBAL BASE */
-body {
-    margin: 0;
-    padding-top: 120px;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
-    scroll-behavior: smooth;
-    transition: background-color 0.4s ease, color 0.4s ease;
-  }
-  
-  .container,
-  .container-fluid {
-    padding-top: 20px;
-  }
-  
-  /* NAVBAR STYLES */
-  .navbar {
-    background-color: #007bff;
-    padding: 10px 20px;
-    z-index: 999;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .navbar-nav .nav-link {
-    color: white !important;
-    font-weight: 500;
-    margin-right: 10px;
-    transition: color 0.3s;
-  }
-  
-  .navbar-nav .nav-link:hover {
-    color: #00bfff !important;
-  }
+/* BASE STYLES */
+body.inner-page {
+  margin: 0;
+  padding-top: 120px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  scroll-behavior: smooth;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
 
-  nav a.active {
-    text-decoration: none;
-    color: white;
-  }
-  
-  
-  #theme-toggle {
-    background-color: transparent;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
-    transition: transform 0.3s ease;
-  }
-  
-  #theme-toggle:hover {
-    transform: scale(1.1);
-  }
-  
-  /* FOOTER SECTION */
-  .footer-section {
-    background-color: #0d1117;
-    color: #ccc;
-    padding: 50px 5%;
-    font-size: 14px;
-    margin-top: 50px;
-  }
-  
-  .footer-content {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  
-  .footer-links a {
-    color: #ccc;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 16px;
-  }
-  
-  .footer-links a:hover {
-    color: #fff;
-  }
-  
-  .footer-bottom {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  #scrollTopBtn {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 18px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  }
-  
-  #scrollTopBtn:hover {
-    background-color: #0056b3;
-  }
-  
-  /* DARK MODE STYLES */
-  body.dark-mode {
-    background-color: #111 !important;
-    color: #f8f8f8;
-  }
-  
-  body.dark-mode .navbar,
-  body.dark-mode .footer-section {
-    background-color: #000 !important;
-  }
-  
-  body.dark-mode .footer-links a,
-  body.dark-mode .footer-bottom p {
-    color: #ccc !important;
-  }
-  
-  body.dark-mode .nav-link {
-    color: #f1f1f1 !important;
-  }
-  
-  body.dark-mode #theme-toggle {
-    color: #f8f8f8;
-  }
-  
-  body.dark-mode .footer-links a:hover {
-    color: white !important;
-  }
-  
+.container,
+.container-fluid {
+  padding-top: 20px;
+}
 
-  /* === DARK MODE FIXES FOR MAIN CONTENT === */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-body.dark-mode .hero-section,
-body.dark-mode .disease-section,
-body.dark-mode .how-it-works,
-body.dark-mode .why-choose,
-/* body.dark-mode .cta-banner {
-  background-color: #121212;
+/* NAVBAR */
+.navbar {
+  background-color: #007bff;
+  padding: 10px 20px;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #00bfff !important;
+}
+
+#theme-toggle {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+/* FOOTER */
+.footer-section {
+  background-color: #0d1117;
+  color: #ccc;
+  padding: 50px 5%;
+  font-size: 14px;
+  margin-top: 50px;
+}
+
+.footer-links a {
+  color: #ccc;
+  margin: 0 10px;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#scrollTopBtn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 18px;
+}
+
+/* DARK MODE BASE */
+body.dark-mode {
+  background-color: #111 !important;
   color: #f1f1f1;
-} */
+}
 
+body.dark-mode .navbar,
+body.dark-mode .footer-section {
+  background-color: #000 !important;
+}
+
+body.dark-mode .nav-link,
+body.dark-mode #theme-toggle,
+body.dark-mode .footer-links a,
+body.dark-mode .footer-bottom p {
+  color: #f1f1f1 !important;
+}
+
+/* DASHBOARD CARDS & TABLE */
+.card,
+.table,
+thead,
+tbody {
+  background-color: white;
+  color: #000;
+}
+
+.dark-mode .card {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+.dark-mode .table {
+  background-color: #222;
+  color: #eaeaea;
+}
+
+.dark-mode thead {
+  background-color: #333;
+}
+
+.dark-mode tbody tr {
+  background-color: #222;
+  color: #ddd;
+}
+
+/* CTA BUTTONS */
+.btn-outline-primary:hover,
+.dark-mode .btn-outline-primary:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+/* === HOME PAGE SPECIFIC === */
+
+/* Hero Section */
+body.dark-mode .hero-section {
+  background: #111;
+  color: #fff;
+}
 body.dark-mode .hero-overlay {
-  background: rgba(0, 0, 0, 0.7); /* darken overlay */
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Disease Prediction Section */
+body.dark-mode .disease-section,
+body.dark-mode .disease-panel {
+  background-color: #1a1a1a;
+  color: #f1f1f1;
 }
 
 body.dark-mode .disease-menu li {
   background-color: #1f1f1f;
-  color: #f8f8f8;
-  border-color: #333;
+  color: #f1f1f1;
+  border: 1px solid #333;
 }
-
 body.dark-mode .disease-menu li.active {
   background-color: #007bff;
   color: white;
 }
 
-body.dark-mode .disease-panel {
-  background-color: #1a1a1a;
-  color: #f0f0f0;
-}
-
-body.dark-mode .btn-link {
-  color: #66b3ff;
-}
-
-body.dark-mode .btn-link:hover {
-  color: #3399ff;
-}
-
-
-
+/* Classifiers Section */
 body.dark-mode .classifiers-section {
   background-color: #101010;
+  color: #f1f1f1;
 }
 
 body.dark-mode .classifier-card-flip .card-front,
@@ -182,17 +173,15 @@ body.dark-mode .classifier-card-flip .card-back {
   border: 1px solid #444;
 }
 
-
+/* How It Works / Benefits */
 body.dark-mode .step,
 body.dark-mode .benefit {
   background-color: #1e1e1e;
   color: #f1f1f1;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
   border: 1px solid #333;
 }
 
-
-/* Dark mode fixes for CTA banner */
+/* CTA Section */
 body.dark-mode .enhanced-cta {
   background: linear-gradient(135deg, #1c1c1c, #121212);
   color: #f1f1f1;
@@ -205,7 +194,6 @@ body.dark-mode .enhanced-cta .cta-subtext {
 body.dark-mode .enhanced-cta .login-btn {
   background-color: #f1f1f1;
   color: #111;
-  border-color: #f1f1f1;
 }
 
 body.dark-mode .enhanced-cta .signup-btn {
@@ -225,25 +213,38 @@ body.dark-mode .enhanced-cta .signup-btn:hover {
 
 
 
-/* Ensure table readability in dark mode */
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .table {
+  background-color: #222;
+  color: #f1f1f1;
+}
+
+body.dark-mode th,
+body.dark-mode td {
+  color: #f1f1f1;
+  background-color: #222;
+  border-color: #444;
+}
+
+body.dark-mode thead {
+  background-color: #333;
+  color: #fff;
+}
+
+
+/* Ensure table text is dark-mode friendly
 body.dark-mode table,
 body.dark-mode th,
 body.dark-mode td {
   color: #f1f1f1 !important;
-  border-color: #444;
-}
+  border-color: #444 !important;
+} */
 
-/* Optional: add a slightly lighter background for contrast */
-body.dark-mode table {
-  background-color: #111;
-}
-
-body.dark-mode th {
-  background-color: #222;
-  font-weight: bold;
-}
-
-
-* {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+/* Optional: make zebra stripes more visible in dark mode
+body.dark-mode tbody tr:nth-child(even) {
+  background-color: #181818 !important;
+} */

@@ -572,6 +572,38 @@ def get_notifications():
 
 
 
+from flask import abort
+
+@app.route("/edit_log/<log_id>", methods=["GET", "POST"])
+@login_required
+def edit_log(log_id):
+    db = get_db()
+    log = db["disease_logs"].find_one({"_id": ObjectId(log_id)})
+
+    if not log or log["username"] != current_user.username:
+            return redirect(url_for("edit_log", log_id=log_id, updated="true"))
+
+    if request.method == "POST":
+        updated_inputs = request.form.getlist("inputs")
+        db["disease_logs"].update_one({"_id": ObjectId(log_id)}, {"$set": {"input_data": updated_inputs}})
+
+        return redirect(url_for("edit_log", log_id=log_id, updated="true"))
+
+    disease = log["disease"]
+    field_map = {
+        "diabetes": ['Pregnancies', 'Glucose', 'Blood Pressure', 'Skin Thickness', 'Insulin', 'BMI', 'Diabetes Pedigree Function', 'Age'],
+        "heart": ['Age', 'Sex', 'Chest Pain Type', 'Resting BP', 'Cholesterol', 'Fasting Blood Sugar', 'Rest ECG', 'Max HR', 'Exercise Induced Angina', 'Oldpeak', 'Slope', 'CA', 'Thal'],
+        "liver": ['Age', 'Gender', 'Total Bilirubin', 'Direct Bilirubin', 'Alk Phos', 'SGPT', 'SGOT', 'Total Proteins', 'Albumin', 'A/G Ratio'],
+        "kidney": ['BMI', 'Systolic BP', 'Fasting Blood Sugar', 'HbA1c', 'Creatinine', 'BUN', 'GFR', 'Protein in Urine', 'Muscle Cramps', 'Itching'],
+        "breast_cancer": ['Radius Mean', 'Texture Mean', 'Perimeter Mean', 'Area Mean', 'Smoothness Mean', 'Compactness Mean', 'Concavity Mean', 'Concave Points Mean', 'Symmetry Mean', 'Fractal Dimension Mean']
+    }
+    fields = field_map.get(disease, [])
+
+    return render_template("edit_log.html", log=log, disease=disease, fields=fields, zip=zip)  
+
+
+
+
 @app.context_processor
 def utility_processor():
     import uuid
@@ -583,6 +615,8 @@ def clean_lime_cache():
             os.remove(f)
         except Exception as e:
             print(f"❌ Failed to delete {f}: {e}")
+
+
 
 # Call this when app starts
 clean_lime_cache()

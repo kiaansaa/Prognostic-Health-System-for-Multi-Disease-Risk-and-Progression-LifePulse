@@ -561,3 +561,85 @@ html, body {
     background-color: #0056b3;
   }
   
+
+
+
+  /* DARK MODE FIXES FOR HOME PAGE */
+body.dark-mode .hero-section {
+  background: #111 !important;
+  color: #fff;
+}
+body.dark-mode .hero-overlay {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .disease-section {
+  background: #1a1a1a;
+  color: #f1f1f1;
+}
+body.dark-mode .disease-menu li {
+  background-color: #1f1f1f;
+  color: #f8f8f8;
+  border-color: #333;
+}
+body.dark-mode .disease-menu li.active {
+  background-color: #007bff;
+  color: white;
+}
+body.dark-mode .disease-panel {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+body.dark-mode .classifiers-section {
+  background-color: #101010;
+  color: #f1f1f1;
+}
+body.dark-mode .card-front,
+body.dark-mode .card-back {
+  background-color: #1c1c1c !important;
+  color: #f0f0f0 !important;
+  border: 1px solid #444 !important;
+}
+
+body.dark-mode .how-it-works {
+  background-color: #1b1b1b;
+  color: #f1f1f1;
+}
+body.dark-mode .step {
+  background-color: #252525;
+  border: 1px solid #333;
+}
+
+body.dark-mode .why-choose {
+  background-color: #141414;
+  color: #f1f1f1;
+}
+body.dark-mode .benefit {
+  background-color: #222;
+  border: 1px solid #444;
+}
+
+body.dark-mode .enhanced-cta {
+  background: linear-gradient(135deg, #1c1c1c, #121212);
+  color: #f1f1f1;
+}
+body.dark-mode .cta-subtext {
+  color: #ccc;
+}
+body.dark-mode .login-btn {
+  background-color: #f1f1f1;
+  color: #111;
+}
+body.dark-mode .signup-btn {
+  background-color: #00c851;
+  color: white;
+}
+body.dark-mode .login-btn:hover {
+  background-color: transparent;
+  color: #f1f1f1;
+  border-color: #f1f1f1;
+}
+body.dark-mode .signup-btn:hover {
+  background-color: #009f3e;
+}
