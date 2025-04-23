@@ -4,7 +4,6 @@ from flask import current_app
 from flask_login import UserMixin
 from bson.objectid import ObjectId
 
-
 # Get DB instance from URI
 def get_db():
     uri = current_app.config["MONGO_URI"]
@@ -22,7 +21,7 @@ def create_user(username, email, password_hash):
         "created_at": datetime.now()
     })
 
-# Log a prediction to disease_logs
+# ✅ Log a prediction and also store a real-time notification
 def log_disease_prediction(username, disease, input_data, prediction, health_score):
     db = get_db()
     logs_collection = db["disease_logs"]
@@ -32,6 +31,15 @@ def log_disease_prediction(username, disease, input_data, prediction, health_sco
         "input_data": input_data,
         "prediction": prediction,
         "health_score": health_score,
+        "timestamp": datetime.now()
+    })
+
+    # ✅ Insert notification into 'notifications' collection
+    message = f"You are {'at risk' if prediction == 1 else 'not at risk'} for {disease.capitalize()}"
+    db["notifications"].insert_one({
+        "username": username,
+        "message": message,
+        "seen": False,
         "timestamp": datetime.now()
     })
 
@@ -59,11 +67,6 @@ class User(UserMixin):
         if user_data:
             return User(user_data["username"], user_data["email"], user_data["_id"])
         return None
-    
-def get_db():
-    uri = current_app.config["MONGO_URI"]
-    client = MongoClient(uri)
-    return client["lifepulse_db"]
 
 def get_users_collection():
     db = get_db()

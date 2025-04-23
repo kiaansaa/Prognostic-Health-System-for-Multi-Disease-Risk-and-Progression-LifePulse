@@ -33,6 +33,9 @@
         <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}#disease-section">Departments</a></li>
         <!-- <li><a href="{{ url_for('about') }}">About</a></li> -->
 
+        
+
+
 
         {% if current_user.is_authenticated %}
           <li class="nav-item"><a class="nav-link" href="{{ url_for('userDashboard', username=current_user.username) }}">Dashboard</a></li>
@@ -45,6 +48,13 @@
         <!-- Theme Toggle -->
         <li class="nav-item">
           <button class="btn btn-sm btn-light ml-2" id="theme-toggle" title="Toggle Theme">🌓</button>
+        </li>
+
+
+        <!-- Notification Bell -->
+        <li class="nav-item position-relative">
+          <button id="notifBtn" class="btn btn-sm btn-warning ml-2" title="Notifications">🔔</button>
+          <span id="notifCount" class="badge badge-danger position-absolute" style="top: 0; right: 0; display: none;">0</span>
         </li>
       </ul>
     </div>
@@ -122,6 +132,30 @@
       }
     });
   </script>
+
+
+
+<script>
+  function fetchNotifications() {
+    fetch('/notifications')
+      .then(res => res.json())
+      .then(data => {
+        if (data.length > 0) {
+          const notifCount = document.getElementById("notifCount");
+          notifCount.innerText = data.length;
+          notifCount.style.display = "inline-block";
+
+          let msg = data.map(n => `🔔 ${n.message} (${n.timestamp})`).join('\n');
+          alert(msg);
+        }
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setInterval(fetchNotifications, 10000);  // check every 10 sec
+  });
+</script>
+
   
 </body>
 </html>

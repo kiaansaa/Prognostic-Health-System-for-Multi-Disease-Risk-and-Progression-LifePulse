@@ -47,7 +47,7 @@ from flask import jsonify
 
 from markupsafe import Markup
 
-
+import glob
 import uuid
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
@@ -178,6 +178,17 @@ def predictPage():
                 prediction = int(prediction[0][0] > 0.5)
 
                 result_template = 'malaria_predict.html' if disease == 'malaria' else 'pneumonia_predict.html'
+
+                # Only log if user is authenticated
+                if current_user.is_authenticated:
+                    log_disease_prediction(
+                        username=current_user.username,
+                        disease=disease,
+                        input_data="image",
+                        prediction=prediction,
+                        health_score=None
+                    )
+
                 return render_template(result_template, pred=prediction, lime_path=None)
 
             except Exception as e:
@@ -249,16 +260,17 @@ def predictPage():
         else:
             prediction = int(prediction)
 
-        # ✅ Log the prediction
-        log_disease_prediction(
-            username=current_user.username,
-            disease=disease,
-            input_data=processed_inputs,
-            prediction=prediction,
-            health_score=health_score
-        )
+        # ✅ Log prediction only if user is logged in
+        if current_user.is_authenticated:
+            log_disease_prediction(
+                username=current_user.username,
+                disease=disease,
+                input_data=processed_inputs,
+                prediction=prediction,
+                health_score=health_score
+            )
 
-        # ✅ Generate new LIME HTML file
+        # ✅ Generate new LIME HTML file for everyone (guest or logged in)
         try:
             if fields and to_predict_np is not None:
                 dummy_data = np.tile(to_predict_np, (100, 1)) + np.random.normal(0, 0.1, size=(100, to_predict_np.shape[1]))
@@ -274,10 +286,11 @@ def predictPage():
                 lime_path = f'lime_cache/{lime_id}.html'
                 os.makedirs('lime_cache', exist_ok=True)
                 explanation.save_to_file(lime_path)
+
                 session['lime_filename'] = lime_id + ".html"
         except Exception as e:
             print(f"❌ LIME generation failed: {e}")
-            session['lime_path'] = None
+            session['lime_filename'] = None
 
         session['last_disease'] = disease
 
@@ -531,11 +544,48 @@ def view_lime_page():
     disease = session.get('last_disease')
 
     if lime_filename and os.path.exists(os.path.join('lime_cache', lime_filename)):
-        lime_url = url_for('serve_lime_file', filename=lime_filename)
-        return render_template("view_lime.html", lime_url=lime_url, disease=disease)
+        return render_template("view_lime.html", disease=disease)
 
     return render_template("error.html", message="No LIME explanation found.")
 
+
+
+@app.route("/notifications")
+@login_required
+def get_notifications():
+    db = get_db()
+    notifications = list(db["notifications"].find({
+        "username": current_user.username,
+        "seen": False
+    }).sort("timestamp", -1))
+
+    # Mark as seen after fetching
+    db["notifications"].update_many(
+        {"username": current_user.username, "seen": False},
+        {"$set": {"seen": True}}
+    )
+
+    return jsonify([{
+        "message": n["message"],
+        "timestamp": n["timestamp"].strftime("%Y-%m-%d %H:%M")
+    } for n in notifications])
+
+
+
+@app.context_processor
+def utility_processor():
+    import uuid
+    return dict(uuid=lambda: str(uuid.uuid4()))
+
+def clean_lime_cache():
+    for f in glob.glob("lime_cache/*.html"):
+        try:
+            os.remove(f)
+        except Exception as e:
+            print(f"❌ Failed to delete {f}: {e}")
+
+# Call this when app starts
+clean_lime_cache()
 
 if __name__ == '__main__':
     app.run(debug=True)

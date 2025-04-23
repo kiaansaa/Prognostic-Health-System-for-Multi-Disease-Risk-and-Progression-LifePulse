@@ -7,64 +7,75 @@
         <h2 class="title">Prediction Summary</h2>
 
         {% if pred == 1 %}
-            <h3 class="status-risk">⚠️ At Risk of {{ disease.replace('_', ' ').title() }}</h3>
+            <h3 class="status-risk">⚠️ You Are At Risk of {{ disease.replace('_', ' ').title() }}</h3>
             <p class="status-description">We recommend you consult a healthcare professional soon.</p>
         {% else %}
-            <h3 class="status-safe">✅ Not at Risk of {{ disease.replace('_', ' ').title() }}</h3>
+            <h3 class="status-safe">✅ AI Predicts No Current Risk for {{ disease.replace('_', ' ').title() }}</h3>
             <p class="status-description">Keep maintaining a healthy lifestyle!</p>
         {% endif %}
 
         {% if health_score is not none %}
-        <div class="score-section">
-            <h4>Your Health Score:</h4>
-            <span class="score-label {% if health_score > 80 %}good{% elif health_score > 50 %}medium{% else %}low{% endif %}">
-                {{ health_score }}/100
-            </span>
 
-            <div class="score-legend">
-                <p><span class="good">80–100</span>: Low Risk</p>
-                <p><span class="medium">51–79</span>: Moderate Risk</p>
-                <p><span class="low">0–50</span>: High Risk</p>
-            </div>
+            {# 🔶 Show clarification if prediction is 0 but score isn't high #}
+            {% if pred == 0 and health_score < 80 %}
+                <div class="alert alert-warning" style="background: #fff3cd; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                    <strong>Note:</strong> The AI predicts no immediate risk, but your health score indicates <strong>{% if health_score < 51 %}high{% else %}moderate{% endif %}</strong> concern.
+                    <br>
+                    Please stay alert and monitor your health regularly.
+                </div>
+            {% endif %}
 
-            <div class="suggestions-box">
-                <h5>Suggestions:</h5>
-                <p>
-                    {% if disease == 'diabetes' %}
-                        {% if health_score < 60 %} Reduce sugar intake, increase exercise, and monitor glucose regularly.
-                        {% elif health_score < 80 %} You're doing okay. Stay consistent with healthy habits.
-                        {% else %} Excellent! Keep it up!
+            <div class="score-section">
+                <h4>Your Health Score:</h4>
+                <span class="score-label {% if health_score > 80 %}good{% elif health_score > 50 %}medium{% else %}low{% endif %}">
+                    {{ health_score }}/100
+                </span>
+
+                <div class="score-legend">
+                    <p><span class="good">80–100</span>: Low Risk</p>
+                    <p><span class="medium">51–79</span>: Moderate Risk</p>
+                    <p><span class="low">0–50</span>: High Risk</p>
+                </div>
+
+                <div class="suggestions-box">
+                    <h5>Suggestions:</h5>
+                    <p>
+                        {% if disease == 'diabetes' %}
+                            {% if health_score < 60 %} Reduce sugar intake, increase exercise, and monitor glucose regularly.
+                            {% elif health_score < 80 %} You're doing okay. Stay consistent with healthy habits.
+                            {% else %} Excellent! Keep it up!
+                            {% endif %}
+                        {% elif disease == 'heart' %}
+                            {% if health_score < 60 %} Watch salt/fat intake and schedule a heart checkup.
+                            {% elif health_score < 80 %} Maintain regular BP/cholesterol checks.
+                            {% else %} Great cardiovascular metrics.
+                            {% endif %}
+                        {% elif disease == 'kidney' %}
+                            {% if health_score < 60 %} Reduce sodium/protein and hydrate well.
+                            {% elif health_score < 80 %} Monitor hydration and test kidney functions.
+                            {% else %} Kidney health looks stable.
+                            {% endif %}
+                        {% elif disease == 'liver' %}
+                            {% if health_score < 60 %} Avoid alcohol, focus on fiber and hydration.
+                            {% elif health_score < 80 %} Monitor enzymes and avoid fatty food.
+                            {% else %} Good liver condition — maintain it.
+                            {% endif %}
+                        {% elif disease == 'breast_cancer' %}
+                            {% if health_score < 60 %} Maintain weight, go for screenings, and reduce processed food.
+                            {% elif health_score < 80 %} Monitor for symptoms, healthy diet helps.
+                            {% else %} No risk, keep tracking once in a while .
+                            {% endif %}
                         {% endif %}
-                    {% elif disease == 'heart' %}
-                        {% if health_score < 60 %} Watch salt/fat intake and schedule a heart checkup.
-                        {% elif health_score < 80 %} Maintain regular BP/cholesterol checks.
-                        {% else %} Great cardiovascular metrics.
-                        {% endif %}
-                    {% elif disease == 'kidney' %}
-                        {% if health_score < 60 %} Reduce sodium/protein and hydrate well.
-                        {% elif health_score < 80 %} Monitor hydration and test kidney functions.
-                        {% else %} Kidney health looks stable.
-                        {% endif %}
-                    {% elif disease == 'liver' %}
-                        {% if health_score < 60 %} Avoid alcohol, focus on fiber and hydration.
-                        {% elif health_score < 80 %} Monitor enzymes and avoid fatty food.
-                        {% else %} Good liver condition — maintain it.
-                        {% endif %}
-                    {% elif disease == 'breast_cancer' %}
-                        {% if health_score < 60 %} Maintain weight, go for screenings, and reduce processed food.
-                        {% elif health_score < 80 %} Monitor for symptoms, healthy diet helps.
-                        {% else %} Very low risk indicators.
-                        {% endif %}
-                    {% endif %}
-                </p>
+                    </p>
+                </div>
             </div>
-        </div>
         {% endif %}
 
         <div class="actions">
             <a href="/" class="btn-primary">← Back to Home</a>
-            <a href="{{ url_for('view_lime_page') }}" class="btn-outline">🧠 View AI Explanation</a>
+            <a href="{{ url_for('view_lime_page') }}?v={{ uuid() }}" class="btn-outline">🧠 View AI Explanation</a>
         </div>
     </div>
 </div>
+
 {% endblock %}

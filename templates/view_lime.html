@@ -22,21 +22,22 @@
 
     <!-- LIME iframe -->
     <div class="lime-frame-container">
+        {% if session.get('lime_filename') %}
         <iframe 
-            src="{{ url_for('serve_lime_file', filename=session.get('lime_path').split('/')[-1]) }}" 
+            src="{{ url_for('serve_lime_file', filename=session.get('lime_filename')) }}?v={{ uuid() }}" 
             frameborder="0" 
             class="lime-iframe"
             width="100%" 
             height="800px"
             style="border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
         </iframe>
+        {% else %}
+        <p class="text-danger">❌ No explanation available. Please run a prediction first.</p>
+        {% endif %}
     </div>
-    
 
     <div class="text-center mt-4">
         <a href="/" class="btn btn-primary">← Back to Home</a>
     </div>
 </div>
-
-
 {% endblock %}
