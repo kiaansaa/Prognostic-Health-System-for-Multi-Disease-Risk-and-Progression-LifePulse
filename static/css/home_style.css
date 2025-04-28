@@ -14,44 +14,54 @@ html, body {
   }
   
   /* Hero Section */
-  .hero-section {
+  /* .hero-section {
     position: relative;
     height: 100vh;
     width: 100vw;
-    background: url('/static/pexels-tara-winstead-8386440.jpg') no-repeat center center/cover;
+    background: url('/static/advanced-ethical-ai-healthcare-robot-operating-stateoftheart-medical-environment-aig-advanced-medical-setting-ai-329934306.webp') no-repeat center center/cover;
+    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     z-index: 1;
-  }
-  
-  .pulse-background {
-    position: absolute;
+  } */
+
+
+  .hero-section {
+    position: relative;
     width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(0, 123, 255, 0.2), transparent 70%);
-    animation: heartbeat 2s ease-in-out infinite;
-    z-index: 0;
-  }
+    height: 100vh;
+    background: url('../home_page_hero.webp') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -80px;
+    z-index: 1;
+}
   
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); opacity: 0.25; }
-    14%      { transform: scale(1.1); opacity: 0.4; }
-    28%      { transform: scale(1); opacity: 0.25; }
-    42%      { transform: scale(1.1); opacity: 0.4; }
-    70%      { transform: scale(1); opacity: 0.25; }
-  }
+
   
-  
-  .hero-overlay {
+  /* .hero-overlay {
     z-index: 2;
     text-align: center;
     color: white;
-    /* background: rgba(0, 0, 0, 0.4); */
+     background: rgba(102, 180, 248, 0.614);  
+    backdrop-filter: blur(4px);
     padding: 40px;
-    border-radius: 10px;
-  }
+    border-radius: 20px;
+  } */
+
+  .hero-overlay {
+    /* background: rgba(0, 0, 0, 0.4); */
+    backdrop-filter: blur(4px);
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+    color: #ffffff;
+    max-width: 900px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
   
   .hero-overlay h1 {
     font-size: 3rem;
@@ -61,7 +71,8 @@ html, body {
   
   .hero-overlay p {
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    
   }
   
   .hero-overlay .btn {

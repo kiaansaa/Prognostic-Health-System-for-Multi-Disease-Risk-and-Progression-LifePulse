@@ -52,8 +52,28 @@ import uuid
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 
+from flask import abort
+
+from flask_login import login_required, current_user
+from functools import wraps
+
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
+
+
+# Mail config
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "nishah8535@gmail.com"
+app.config["MAIL_PASSWORD"] = "oynl bygs wmbq mhcl"  # Not Gmail password. Use App Password.
+app.config["MAIL_DEFAULT_SENDER"] = "LifePulse AI <nishah8535@gmail.com>"
+
+mail = Mail(app) 
+app.extensions['mail'] = mail
+
+
 app.secret_key = "supersecretkey123"
 
 bcrypt = Bcrypt(app)
@@ -472,7 +492,12 @@ def login():
 
         user_data = users_collection.find_one({"username": username})
         if user_data and bcrypt.check_password_hash(user_data['password'], password):
-            user_obj = User(user_data['username'], user_data['email'], user_data['_id'])
+            user_obj = User(
+            user_data['username'],
+            user_data['email'],
+            user_data['_id'],
+            role=user_data.get("role", "user")
+                            )
             login_user(user_obj)
             return redirect(url_for('userDashboard', username=user_obj.username))  # ✅ Redirect to dashboard
         else:
@@ -516,9 +541,6 @@ def progression_api(disease):
     )
 
 
-# @app.route('/explanation')
-# def view_explanation():
-#     return render_template('view_lime.html')
 
 
     # Return as JSON
@@ -572,7 +594,7 @@ def get_notifications():
 
 
 
-from flask import abort
+
 
 @app.route("/edit_log/<log_id>", methods=["GET", "POST"])
 @login_required
@@ -617,6 +639,46 @@ def clean_lime_cache():
             print(f"❌ Failed to delete {f}: {e}")
 
 
+
+
+
+
+from collections import Counter
+from statistics import mean
+
+# Decorator to restrict to admins
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.role != "admin":
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route("/admin")
+@admin_required
+def admin_dashboard():
+    db = get_db()
+    logs = list(db["disease_logs"].find().sort("timestamp", -1))
+    users = list(db["users"].find({}, {"username": 1}))
+
+    # === Quick Stats ===
+    total_users = len(set(user["username"] for user in users))
+    total_predictions = len(logs)
+    health_scores = [log["health_score"] for log in logs if log.get("health_score") is not None]
+    avg_health_score = round(mean(health_scores), 2) if health_scores else "N/A"
+    disease_names = [log["disease"] for log in logs]
+    most_common_disease = Counter(disease_names).most_common(1)[0][0] if disease_names else "N/A"
+
+    return render_template(
+        "admin_dashboard.html",
+        logs=logs,
+        users=users,
+        total_users=total_users,
+        total_predictions=total_predictions,
+        avg_health_score=avg_health_score,
+        most_common_disease=most_common_disease
+    )
 
 # Call this when app starts
 clean_lime_cache()

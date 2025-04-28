@@ -1,0 +1,78 @@
+/* Base Admin Dashboard Styles */
+.container {
+    max-width: 95%;
+  }
+  
+  h2 {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .table thead th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .table td,
+  .table th {
+    vertical-align: middle;
+    font-size: 14px;
+  }
+  
+  select.form-control,
+  input[type="text"],
+  input[type="date"] {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f5f5f5;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Color indicators */
+  .text-success {
+    color: #28a745 !important;
+  }
+  
+  .text-danger {
+    color: #dc3545 !important;
+  }
+  
+  /* Dark mode overrides */
+  body.dark-mode h2 {
+    color: #f1f1f1;
+  }
+  
+  body.dark-mode .table thead th {
+    background-color: #222;
+    color: #eee;
+  }
+  
+  body.dark-mode .table {
+    background-color: #121212;
+    color: #ddd;
+  }
+  
+  body.dark-mode .table tbody tr:hover {
+    background-color: #1c1c1c;
+  }
+  
+  body.dark-mode input,
+  body.dark-mode select {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+    border: 1px solid #444;
+  }
+  
+
+  .card {
+    border-radius: 12px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    transform: scale(1.03);
+  }
+  

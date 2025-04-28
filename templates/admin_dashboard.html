@@ -1,0 +1,125 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">🩺 Admin Portal – Doctor View</h2>
+
+
+  <div class="container mb-4">
+    <div class="row text-center">
+      <div class="col-md-3 mb-2">
+        <div class="card bg-primary text-white shadow">
+          <div class="card-body">
+            <h5>Total Users</h5>
+            <h3>{{ total_users }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-2">
+        <div class="card bg-success text-white shadow">
+          <div class="card-body">
+            <h5>Total Predictions</h5>
+            <h3>{{ total_predictions }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-2">
+        <div class="card bg-warning text-white shadow">
+          <div class="card-body">
+            <h5>Avg. Health Score</h5>
+            <h3>{{ avg_health_score }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-2">
+        <div class="card bg-danger text-white shadow">
+          <div class="card-body">
+            <h5>Top Disease</h5>
+            <h3>{{ most_common_disease|capitalize }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Filter Controls -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <select id="user-filter" class="form-control">
+        <option value="">Filter by User</option>
+        {% for user in users %}
+          <option value="{{ user.username }}">{{ user.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <input type="text" id="disease-filter" class="form-control" placeholder="Filter by Disease">
+    </div>
+    <div class="col-md-4">
+      <input type="date" id="date-filter" class="form-control">
+    </div>
+  </div>
+
+
+
+ 
+  <!-- Logs Table -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped shadow-sm" id="admin-log-table">
+      <thead class="thead-dark">
+        <tr>
+          <th>User</th>
+          <th>Disease</th>
+          <th>Prediction</th>
+          <th>Health Score</th>
+          <th>Input</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+          <tr>
+            <td>{{ log.username }}</td>
+            <td>{{ log.disease.capitalize() }}</td>
+            <td class="text-{{ 'danger' if log.prediction == 1 else 'success' }}">
+              {{ 'At Risk' if log.prediction == 1 else 'Not at Risk' }}
+            </td>
+            <td>{{ log.health_score if log.health_score is not none else 'N/A' }}</td>
+            <td>{{ log.input_data }}</td>
+            <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const rows = document.querySelectorAll("#admin-log-table tbody tr");
+
+  document.getElementById("user-filter").addEventListener("change", function () {
+    const user = this.value.toLowerCase();
+    rows.forEach(row => {
+      row.style.display = row.cells[0].innerText.toLowerCase().includes(user) ? "" : "none";
+    });
+  });
+
+  document.getElementById("disease-filter").addEventListener("input", function () {
+    const disease = this.value.toLowerCase();
+    rows.forEach(row => {
+      row.style.display = row.cells[1].innerText.toLowerCase().includes(disease) ? "" : "none";
+    });
+  });
+
+  document.getElementById("date-filter").addEventListener("change", function () {
+    const date = this.value;
+    rows.forEach(row => {
+      row.style.display = row.cells[5].innerText.startsWith(date) ? "" : "none";
+    });
+  });
+</script>
+
+{% endblock %}
