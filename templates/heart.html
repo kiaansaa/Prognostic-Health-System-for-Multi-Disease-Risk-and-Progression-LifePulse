@@ -74,20 +74,21 @@
 
                 <div class="row">
                     {% set fields = [
-                        ('age', 'Age', '29 to 77'),
-                        ('sex', 'Sex', '1 for male, 0 for female'),
-                        ('cp', 'Chest Pain Type', '0 to 3'),
-                        ('trestbps', 'Resting Blood Pressure', '94 to 200 mm/Hg'),
-                        ('chol', 'Serum Cholesterol', '126 to 564 mg/dl'),
-                        ('fbs', 'Fasting Blood Sugar', '0 or 1'),
-                        ('restecg', 'Resting ECG Results', '0 to 2'),
-                        ('thalach', 'Max Heart Rate', '71 to 202'),
-                        ('exang', 'Exercise Induced Angina', '0 or 1'),
-                        ('oldpeak', 'ST Depression', '0 to 6.2'),
-                        ('slope', 'Slope of ST Segment', '0 to 2'),
-                        ('ca', 'Number of Major Vessels', '0 to 3'),
-                        ('thal', 'Thalassemia', '3 = normal, 6 = fixed, 7 = reversible')
+                        ('age', 'Age', 'Your Age'),
+                        ('sex', 'Sex', '1 = Male, 0 = Female'),
+                        ('cp', 'Chest Pain Type', 'Type of chest pain you feel (0 to 3)'),
+                        ('trestbps', 'Resting Blood Pressure', 'Blood pressure while at rest (94 to 200 mm/Hg)'),
+                        ('chol', 'Serum Cholesterol', 'Cholesterol level in blood (126 to 564 mg/dL)'),
+                        ('fbs', 'Fasting Blood Sugar', 'Is your fasting blood sugar > 120? (1 = Yes, 0 = No)'),
+                        ('restecg', 'Resting ECG Results', 'Results of resting heart scan (0 to 2)'),
+                        ('thalach', 'Max Heart Rate', 'Highest heart rate during exercise (71 to 202 bpm)'),
+                        ('exang', 'Chest Pain After Exercise', 'Did you feel chest pain after workout? (1 = Yes, 0 = No)'),
+                        ('oldpeak', 'Heart Stress Level', 'How much your heart signal drops during exercise (0 to 6.2)'),
+                        ('slope', 'ECG Slope Type', 'Shape of your ECG curve during exercise (0 = flat, 1 = up, 2 = down)'),
+                        ('ca', 'Blocked Heart Vessels', 'How many main heart vessels are blocked? (0 to 3)'),
+                        ('thal', 'Thalassemia', 'Type of inherited blood disorder (3 = normal, 6 = fixed, 7 = reversible)')
                     ] %}
+                    
 
                     {% for field in fields %}
                         {% if loop.index0 % 2 == 0 %}

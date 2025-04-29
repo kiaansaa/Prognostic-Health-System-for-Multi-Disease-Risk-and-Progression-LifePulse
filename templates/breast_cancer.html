@@ -74,17 +74,18 @@
 
                 <div class="row">
                     {% set fields = [
-                        ('radius_mean', 'Radius Mean', 'Typical range: 6 to 28'),
-                        ('texture_mean', 'Texture Mean', 'Typical range: 9 to 40'),
-                        ('perimeter_mean', 'Perimeter Mean', 'Typical range: 43 to 190'),
-                        ('area_mean', 'Area Mean', 'Typical range: 143 to 2500'),
-                        ('smoothness_mean', 'Smoothness Mean', 'Typical range: 0.05 to 0.16'),
-                        ('compactness_mean', 'Compactness Mean', 'Typical range: 0.01 to 0.35'),
-                        ('concavity_mean', 'Concavity Mean', 'Typical range: 0.01 to 0.4'),
-                        ('concave_points_mean', 'Concave Points Mean', 'Typical range: 0.01 to 0.2'),
-                        ('symmetry_mean', 'Symmetry Mean', 'Typical range: 0.1 to 0.3'),
-                        ('fractal_dimension_mean', 'Fractal Dimension Mean', 'Typical range: 0.05 to 0.1')
+                        ('radius_mean', 'Average Radius', 'Size of the lump (Typical range: 6 to 28)'),
+                        ('texture_mean', 'Average Texture', 'Surface detail level (Typical range: 9 to 40)'),
+                        ('perimeter_mean', 'Average Perimeter', 'Outer boundary length (Typical range: 43 to 190)'),
+                        ('area_mean', 'Average Area', 'Total area of the lump (Typical range: 143 to 2500)'),
+                        ('smoothness_mean', 'Average Smoothness', 'How smooth the edges are (0.05 to 0.16)'),
+                        ('compactness_mean', 'Average Compactness', 'Tightness or density of the lump (0.01 to 0.35)'),
+                        ('concavity_mean', 'Average Concavity', 'Depth of inward curves (0.01 to 0.4)'),
+                        ('concave_points_mean', 'Average Concave Points', 'Number of inward-pointing angles (0.01 to 0.2)'),
+                        ('symmetry_mean', 'Average Symmetry', 'How symmetric the shape is (0.1 to 0.3)'),
+                        ('fractal_dimension_mean', 'Fractal Dimension', 'Edge complexity measure (0.05 to 0.1)')
                     ] %}
+                    
 
                     {% for field in fields %}
                         {% if loop.index0 % 2 == 0 %}

@@ -77,15 +77,16 @@
                 <input type="hidden" name="disease" value="diabetes" />
 
                 {% set fields = [
-                    ('pregnancies', 'Number of Pregnancies', '0 or more'),
-                    ('glucose', 'Glucose Level (mg/dL)', 'Typically between 70 and 200'),
-                    ('bloodpressure', 'Blood Pressure (mmHg)', 'Typically between 60 and 130'),
-                    ('skinthickness', 'Skin Thickness (mm)', 'Common range: 10 to 80'),
-                    ('insulin', 'Insulin Level (IU/mL)', 'Common range: 15 to 276'),
-                    ('bmi', 'Body Mass Index (kg/m²)', 'Typically 18.5 to 50'),
-                    ('dpf', 'Diabetes Pedigree Function', 'e.g., 0.47'),
-                    ('age', 'Age (years)', 'e.g., 21 to 81')
+                    ('pregnancies', 'Number of Pregnancies', 'How many times you’ve been pregnant (0 or more)'),
+                    ('glucose', 'Glucose Level (mg/dL)', 'Blood sugar level – usually between 70 and 200'),
+                    ('bloodpressure', 'Blood Pressure (mmHg)', 'Your resting blood pressure – normally 60 to 130'),
+                    ('skinthickness', 'Skin Thickness (mm)', 'Measured skin fold thickness – common range: 10 to 80'),
+                    ('insulin', 'Insulin Level (IU/mL)', 'Insulin in your blood – typically 15 to 276'),
+                    ('bmi', 'Body Mass Index (BMI) (kg/m²)', 'Your BMI (weight vs height) – typically 18.5 to 50'),
+                    ('dpf', 'Diabetes Pedigree Function', 'Family diabetes risk score – e.g., 0.47'),
+                    ('age', 'Age (years)', 'Your current age – e.g., 21 to 81')
                 ] %}
+                
 
                 {% for field in fields %}
                 <div class="form-group">

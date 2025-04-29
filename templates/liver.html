@@ -73,18 +73,19 @@
                 <input type="hidden" name="disease" value="liver" />
 
                 <div class="row">
-                    {% set fields = [
-                        ('Age', 'Age', 'e.g., 18 to 90'),
-                        ('Total_Bilirubin', 'Total Bilirubin (mg/dL)', 'Normal range: 0.1 – 1.2'),
-                        ('Direct_Bilirubin', 'Direct Bilirubin (mg/dL)', 'Normal < 0.3'),
-                        ('Alkaline_Phosphotase', 'Alkaline Phosphotase (U/L)', 'Normal: 44 – 147'),
-                        ('Alamine_Aminotransferase', 'Alamine Aminotransferase (ALT)', 'Normal: 7 – 56 U/L'),
-                        ('Aspartate_Aminotransferase', 'Aspartate Aminotransferase (AST)', 'Normal: 10 – 40 U/L'),
-                        ('Total_Protiens', 'Total Proteins (g/dL)', 'Normal: 6.0 – 8.3'),
-                        ('Albumin', 'Albumin (g/dL)', 'Normal: 3.5 – 5.0'),
-                        ('Albumin_and_Globulin_Ratio', 'Albumin/Globulin Ratio', 'Ideal: 1.0 – 2.1'),
-                        ('Gender_Male', 'Gender', '1 for Male, 0 for Female')
+                    {% set fields = [ 
+                        ('Age', 'Age', 'Your age in years (e.g., 18 to 90)'),
+                        ('Total_Bilirubin', 'Total Bilirubin', 'Yellow pigment in blood – Normal: 0.1 to 1.2 mg/dL'),
+                        ('Direct_Bilirubin', 'Direct Bilirubin', 'Direct part of bilirubin – Normal is less than 0.3 mg/dL'),
+                        ('Alkaline_Phosphotase', 'Alkaline Phosphotase', 'Liver enzyme – Normal: 44 to 147 U/L'),
+                        ('Alamine_Aminotransferase', 'ALT (Liver Enzyme)', 'Helps break down proteins – Normal: 7 to 56 U/L'),
+                        ('Aspartate_Aminotransferase', 'AST (Liver Enzyme)', 'Released when liver is damaged – Normal: 10 to 40 U/L'),
+                        ('Total_Protiens', 'Total Proteins', 'Amount of all proteins in blood – Normal: 6.0 to 8.3 g/dL'),
+                        ('Albumin', 'Albumin', 'Main blood protein – Normal: 3.5 to 5.0 g/dL'),
+                        ('Albumin_and_Globulin_Ratio', 'A/G Ratio', 'Balance of two proteins – Ideal: 1.0 to 2.1'),
+                        ('Gender_Male', 'Gender', '1 = Male, 0 = Female')
                     ] %}
+                    
 
                     {% for field in fields %}
                         {% if loop.index0 % 2 == 0 %}

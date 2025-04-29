@@ -36,20 +36,26 @@
     </div>
     <div class="disease-info">
       {% for disease in [
-        ('heart', 'Heart Disease', 'Predict cardiovascular risk using cholesterol, blood pressure, and lifestyle metrics.',
-          ['🧪 Clinical Parameters', '🧬 Genetic Markers', '🫀 Lifestyle Factors', '📖 Medical History'], '/heart'),
-        ('diabetes', 'Diabetes', 'Monitor blood sugar, insulin, BMI, and history for type 2 diabetes risk.',
-          ['🍬 Glucose Levels', '⚖️ BMI + Weight', '🧠 Age & Heritage'], '/diabetes'),
-        ('cancer', 'Breast Cancer', 'Risk detection using diagnostic and cytology features.',
-          ['🔬 Radius, Texture, Smoothness', '🧫 Symmetry, Area, Compactness'], '/cancer'),
-        ('liver', 'Liver Disease', 'Detection using enzyme levels and patient demographics.',
-          ['🧪 ALT, AST, Bilirubin', '🧓 Age, Albumin'], '/liver'),
-        ('kidney', 'Kidney Disease', 'Early-stage detection using blood and urine markers.',
-          ['🧫 Blood Urea, Creatinine', '🚽 Urine Gravity, RBC/WBC'], '/kidney'),
-        ('malaria', 'Malaria', 'Microscopic image-based detection of infected RBCs.',
-          ['🧬 Cell Image Classification', '📸 Convolutional Models'], '/malaria'),
-        ('pneumonia', 'Pneumonia', 'Prediction via chest X-rays using CNN models.',
-          ['🩻 Image Feature Extraction', '💨 Lungs, Infiltration, Shadows'], '/pneumonia')
+        ('heart', 'Heart Disease', 'Common symptoms related to cardiovascular risk include:',
+          ['💓 Chest pain or discomfort', '😤 Shortness of breath', '💥 Fatigue with exertion', '🌀 Irregular heartbeat', '🦵 Swelling in legs or ankles'], '/heart'),
+    
+        ('diabetes', 'Diabetes', 'Watch out for early signs of high blood sugar and metabolic imbalance:',
+          ['🥤 Excessive thirst', '🚽 Frequent urination', '😴 Fatigue or drowsiness', '👀 Blurred vision', '🍽️ Increased hunger'], '/diabetes'),
+    
+        ('cancer', 'Breast Cancer', 'Be alert to these physical and visual changes in the breast area:',
+          ['🧼 Lump in breast or underarm', '📏 Change in breast size or shape', '🩸 Nipple discharge or pain', '🔴 Skin dimpling or redness', '🧊 Hardened mass or swelling'], '/cancer'),
+    
+        ('liver', 'Liver Disease', 'Common symptoms that may indicate liver issues include:',
+          ['💛 Yellowing of skin or eyes (jaundice)', '🤢 Nausea or vomiting', '🥱 Persistent fatigue', '🧍 Pain in upper right abdomen', '🦵 Swelling in legs or ankles'], '/liver'),
+    
+        ('kidney', 'Kidney Disease', 'Symptoms that often suggest kidney malfunction are:',
+          ['💦 Changes in urination pattern', '😫 Tiredness and weakness', '🩸 Blood in urine', '🥴 Loss of appetite', '😵 Trouble concentrating'], '/kidney'),
+    
+        ('malaria', 'Malaria', 'Malaria symptoms can appear like flu or dengue:',
+          ['🌡️ High fever with chills', '🤯 Headache and body pain', '🤢 Nausea or vomiting', '😓 Sweating episodes', '🛌 Severe fatigue'], '/malaria'),
+    
+        ('pneumonia', 'Pneumonia', 'Key respiratory symptoms seen in pneumonia cases include:',
+          ['😤 Shortness of breath', '💨 Chest pain during breathing or coughing', '🌡️ High fever and chills', '🧏 Wet or dry cough', '🦠 Green or yellow mucus'], '/pneumonia')
       ] %}
       <div class="disease-panel {% if loop.first %}active{% endif %}" id="{{ disease[0] }}">
         <h3>{{ disease[1] }}</h3>
@@ -63,8 +69,8 @@
       </div>
       {% endfor %}
     </div>
-  </div>
-</section>
+    
+  </section>
 
 <!-- Classifiers Section -->
 <section class="classifiers-section">

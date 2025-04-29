@@ -74,17 +74,18 @@
 
                 <div class="row">
                     {% set fields = [
-                        ('BMI', 'Body Mass Index (BMI)', 'Normal range: 18.5 – 24.9'),
-                        ('SystolicBP', 'Systolic Blood Pressure (mmHg)', 'Typical range: 90 – 140'),
-                        ('FastingBloodSugar', 'Fasting Blood Sugar (mg/dL)', 'Normal < 100'),
-                        ('HbA1c', 'HbA1c (%)', 'Normal < 5.7%'),
-                        ('SerumCreatinine', 'Serum Creatinine (mg/dL)', 'Normal: 0.6 – 1.3'),
-                        ('BUNLevels', 'BUN Levels (mg/dL)', 'Normal: 7 – 20'),
-                        ('GFR', 'Glomerular Filtration Rate (GFR)', 'Normal > 90 mL/min'),
-                        ('ProteinInUrine', 'Protein in Urine', 'yes(1) or no(0)'),
-                        ('MuscleCramps', 'Muscle Cramps', 'yes(1) or no(0)'),
-                        ('Itching', 'Itching', 'yes(1) or no(0)')
+                        ('BMI', 'Body Mass Index (BMI)', 'Your weight vs height – Normal: 18.5 to 24.9'),
+                        ('SystolicBP', 'Systolic Blood Pressure', 'Top number in BP reading – Normal: 90 to 140 mmHg'),
+                        ('FastingBloodSugar', 'Fasting Blood Sugar', 'Blood sugar after fasting – Normal is below 100 mg/dL'),
+                        ('HbA1c', 'HbA1c (%)', 'Average blood sugar level over 3 months – Normal < 5.7%'),
+                        ('SerumCreatinine', 'Serum Creatinine', 'Waste product in blood – Normal: 0.6 to 1.3 mg/dL'),
+                        ('BUNLevels', 'BUN (Blood Urea Nitrogen)', 'Kidney waste level – Normal: 7 to 20 mg/dL'),
+                        ('GFR', 'GFR (Kidney Function)', 'Kidney filtering rate – Normal is over 90 mL/min'),
+                        ('ProteinInUrine', 'Protein in Urine', 'Do you have protein in urine? (1 = Yes, 0 = No)'),
+                        ('MuscleCramps', 'Muscle Cramps', 'Are you having cramps? (1 = Yes, 0 = No)'),
+                        ('Itching', 'Itching', 'Do you feel itchy? (1 = Yes, 0 = No)')
                     ] %}
+                    
 
                     {% for field in fields %}
                         {% if loop.index0 % 2 == 0 %}

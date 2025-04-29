@@ -62,6 +62,15 @@ from flask_mail import Mail, Message
 app = Flask(__name__)
 
 
+
+
+
+# app = Flask(
+#     __name__,
+#     static_folder='static',    
+#     template_folder='templates'
+# )
+
 # Mail config
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
@@ -685,3 +694,5 @@ clean_lime_cache()
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # port = int(os.environ.get("PORT", 5000))  
+    # app.run(host='0.0.0.0', port=port)
