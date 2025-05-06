@@ -65,11 +65,7 @@ app = Flask(__name__)
 
 
 
-# app = Flask(
-#     __name__,
-#     static_folder='static',    
-#     template_folder='templates'
-# )
+
 
 # Mail config
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
@@ -424,13 +420,7 @@ def pneumoniapredictPage():
         return render_template('pneumonia.html', message=f"Error: {e}")
 
 
-# @app.route('/dashboard/<username>')
-# @login_required
-# def userDashboard(username):
-#     from mongo_setup import get_db
-#     db = get_db()
-#     logs = list(db["disease_logs"].find({"username": username}).sort("timestamp", -1))
-#     return render_template('dashboard.html', username=username, logs=logs)
+    return render_template('dashboard.html', username=username, logs=logs)
 
 @app.route("/dashboard/<username>")
 @login_required
