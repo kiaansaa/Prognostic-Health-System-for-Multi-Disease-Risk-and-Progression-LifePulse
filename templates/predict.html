@@ -16,12 +16,22 @@
 
         {% if health_score is not none %}
 
-            {# 🔶 Show clarification if prediction is 0 but score isn't high #}
+            {# Handle contradictory cases with alerts #}
             {% if pred == 0 and health_score < 80 %}
                 <div class="alert alert-warning" style="background: #fff3cd; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
                     <strong>Note:</strong> The AI predicts no immediate risk, but your health score indicates <strong>{% if health_score < 51 %}high{% else %}moderate{% endif %}</strong> concern.
                     <br>
                     Please stay alert and monitor your health regularly.
+                </div>
+            {% elif pred == 1 and health_score >= 80 %}
+                <div class="alert alert-warning" style="background: #fff3cd; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                    <strong>Note:</strong> You have a good health score, but certain risk markers suggest potential danger.
+                    <br>
+                    Please consult a doctor to interpret your results thoroughly.
+                </div>
+            {% elif pred == 1 and health_score < 80 %}
+                <div class="alert alert-danger" style="background: #f8d7da; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                    <strong>Warning:</strong> Your health score is also low, further confirming the risk. Immediate medical attention is advised.
                 </div>
             {% endif %}
 
@@ -43,28 +53,33 @@
                         {% if disease == 'diabetes' %}
                             {% if health_score < 60 %} Reduce sugar intake, increase exercise, and monitor glucose regularly.
                             {% elif health_score < 80 %} You're doing okay. Stay consistent with healthy habits.
+                            {% else %} {% if pred == 1 %} Despite high score, risk markers were detected. Monitor glucose and consult a specialist.
                             {% else %} Excellent! Keep it up!
-                            {% endif %}
+                            {% endif %} {% endif %}
                         {% elif disease == 'heart' %}
                             {% if health_score < 60 %} Watch salt/fat intake and schedule a heart checkup.
                             {% elif health_score < 80 %} Maintain regular BP/cholesterol checks.
+                            {% else %} {% if pred == 1 %} Continue regular checkups — despite good score, AI found risk indicators.
                             {% else %} Great cardiovascular metrics.
-                            {% endif %}
+                            {% endif %} {% endif %}
                         {% elif disease == 'kidney' %}
                             {% if health_score < 60 %} Reduce sodium/protein and hydrate well.
                             {% elif health_score < 80 %} Monitor hydration and test kidney functions.
+                            {% else %} {% if pred == 1 %} Risk detected. Repeat urine and creatinine tests as precaution.
                             {% else %} Kidney health looks stable.
-                            {% endif %}
+                            {% endif %} {% endif %}
                         {% elif disease == 'liver' %}
                             {% if health_score < 60 %} Avoid alcohol, focus on fiber and hydration.
                             {% elif health_score < 80 %} Monitor enzymes and avoid fatty food.
+                            {% else %} {% if pred == 1 %} Recheck liver enzymes. AI flagged potential risk areas.
                             {% else %} Good liver condition — maintain it.
-                            {% endif %}
+                            {% endif %} {% endif %}
                         {% elif disease == 'breast_cancer' %}
                             {% if health_score < 60 %} Maintain weight, go for screenings, and reduce processed food.
                             {% elif health_score < 80 %} Monitor for symptoms, healthy diet helps.
-                            {% else %} No risk, keep tracking once in a while .
-                            {% endif %}
+                            {% else %} {% if pred == 1 %} Screening advised. Model indicates risk despite good score.
+                            {% else %} No risk, keep tracking once in a while.
+                            {% endif %} {% endif %}
                         {% endif %}
                     </p>
                 </div>
