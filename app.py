@@ -1,63 +1,55 @@
-from flask import Flask, render_template, request
-from flask import redirect, url_for
-from datetime import datetime, timedelta
-from keras.models import load_model
-from keras.preprocessing import image
-from werkzeug.utils import secure_filename
-import numpy as np
-import joblib
-import os
-from PIL import Image
-from lime.lime_tabular import LimeTabularExplainer
-from werkzeug.utils import secure_filename
-import matplotlib
-matplotlib.use('Agg')  
-import matplotlib.pyplot as plt
-from flask import request
+# Core Flask
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, abort, jsonify
 
-import warnings
-
-import sys
-import sklearn.ensemble._forest
-
-from lime import lime_image
-from skimage.segmentation import mark_boundaries
-import matplotlib.pyplot as plt
-import uuid
-
+# Flask extensions
 from flask_pymongo import PyMongo
-from mongo_setup import log_disease_prediction
-from urllib.parse import quote_plus
-
-
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_mail import Mail, Message
 
-from mongo_setup import User, get_db
-from mongo_setup import get_db
+# Date and Time
+from datetime import datetime, timedelta
+import uuid
 
-from bson.objectid import ObjectId
+# MongoDB setup and helpers
+from mongo_setup import get_db, get_users_collection, log_disease_prediction, User
 
-from mongo_setup import get_users_collection
-
+# File handling
+from werkzeug.utils import secure_filename
+import os
+import glob
 import base64
 from io import BytesIO
+from urllib.parse import quote_plus
 
-from flask import jsonify
+# ML & Data libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')  # Non-GUI backend
 
-from markupsafe import Markup
+from keras.models import load_model
+from keras.preprocessing import image
+from sklearn.ensemble import RandomForestClassifier  # or relevant classifiers used
 
-import glob
-import uuid
-import os
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
+# LIME explanation
+from lime import lime_image
+from lime.lime_tabular import LimeTabularExplainer
+from skimage.segmentation import mark_boundaries
 
-from flask import abort
+# Image handling
+from PIL import Image
 
-from flask_login import login_required, current_user
-from functools import wraps
-
-from flask_mail import Mail, Message
+import joblib           
+import warnings         
+import sys              
+from markupsafe import Markup  
+import sklearn.ensemble._forest  
+from functools import wraps     
+from bson.objectid import ObjectId
+from collections import Counter
+from statistics import mean
 
 app = Flask(__name__)
 
@@ -92,10 +84,10 @@ def load_user(user_id):
     return User.get_by_id(user_id)
 
 username = "Nishant8535"
-password = quote_plus("Gop65792")  # safely encoded
+password = quote_plus("Gop65792")  
 host = "cluster0.dwdu3pu.mongodb.net"
 
-# Connect to your MongoDB Atlas cluster
+# Connect to MongoDB Atlas cluster
 app.config["MONGO_URI"] = f"mongodb+srv://{username}:{password}@{host}/lifepulse_db?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
@@ -355,7 +347,7 @@ def malariapredictPage():
 
         print(f"📊 Raw malaria model output: {raw_output}")
 
-        # 🛠 Flip logic: 0 = infected, 1 = healthy
+        #  Flip logic: 0 = infected, 1 = healthy
         pred = 1 if raw_output < 0.5 else 0
 
         # ✅ Log to MongoDB if user is logged in
@@ -642,8 +634,7 @@ def clean_lime_cache():
 
 
 
-from collections import Counter
-from statistics import mean
+
 
 # Decorator to restrict to admins
 def admin_required(f):
@@ -679,10 +670,9 @@ def admin_dashboard():
         most_common_disease=most_common_disease
     )
 
-# Call this when app starts
+# Calls this when app starts
 clean_lime_cache()
 
 if __name__ == '__main__':
     app.run(debug=True)
-    # port = int(os.environ.get("PORT", 5000))  
-    # app.run(host='0.0.0.0', port=port)
+   
