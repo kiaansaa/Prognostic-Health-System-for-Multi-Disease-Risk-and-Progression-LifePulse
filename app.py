@@ -53,18 +53,12 @@ from statistics import mean
 
 app = Flask(__name__)
 
-
-
-
-
-
-
 # Mail config
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USERNAME"] = "nishah8535@gmail.com"
-app.config["MAIL_PASSWORD"] = "oynl bygs wmbq mhcl"  # Not Gmail password. Use App Password.
+app.config["MAIL_PASSWORD"] = "oynl bygs wmbq mhcl"  
 app.config["MAIL_DEFAULT_SENDER"] = "LifePulse AI <nishah8535@gmail.com>"
 
 mail = Mail(app) 
